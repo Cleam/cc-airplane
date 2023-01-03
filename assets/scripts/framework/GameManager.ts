@@ -1,6 +1,13 @@
-import { _decorator, Component, Node, Prefab, instantiate } from "cc";
+import { _decorator, Component, Node, Prefab, instantiate, sys } from "cc";
 import { bullet } from "../bullet/Bullet";
 const { ccclass, property } = _decorator;
+
+if (sys.Platform.WECHAT_GAME) {
+  console.log("[Platform]", sys.Platform);
+  wx.onShow((options) => {
+    console.log("[onShow] options :>> ", options);
+  });
+}
 
 @ccclass("GameManager")
 export class GameManager extends Component {
@@ -24,6 +31,8 @@ export class GameManager extends Component {
   public shootTime = 0.3;
   @property
   public bulletSpeed = 1;
+
+  // 敌机
 
   private _curShootTime = 0;
   private _isShooting = false;
