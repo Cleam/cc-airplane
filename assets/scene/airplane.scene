@@ -886,7 +886,8 @@
       "__expectedType__": "cc.Prefab"
     },
     "enemyTime": 1,
-    "enemySpeed": 0.3,
+    "enemy1Speed": 0.3,
+    "enemy2Speed": 0.5,
     "_id": "75ElkTlZ1BV56k2bvki1BY"
   },
   {

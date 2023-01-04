@@ -71,14 +71,36 @@ export class GameManager extends Component {
         this._curShootTime = 0;
       }
     }
+    this._curEnemyTime += deltaTime;
     if (this._combinationInterval === Const.combination.TYPE1) {
-      this._curEnemyTime += deltaTime;
       if (this._curEnemyTime > this.enemyTime) {
         this.createEnemy();
         this._curEnemyTime = 0;
       }
     } else if (this._combinationInterval === Const.combination.TYPE2) {
+      if (this._curEnemyTime > this.enemyTime * 1.2) {
+        const whichType = math.randomRangeInt(1, 3);
+        // 组合1和2
+        if (whichType === Const.combination.TYPE1) {
+          this.createCombination1();
+        } else {
+          this.createEnemy();
+        }
+        this._curEnemyTime = 0;
+      }
     } else {
+      if (this._curEnemyTime > this.enemyTime * 1.4) {
+        const whichType = math.randomRangeInt(1, 4);
+        // 组合1和2
+        if (whichType === Const.combination.TYPE1) {
+          this.createCombination2();
+        } else if (whichType === Const.combination.TYPE2) {
+          this.createCombination1();
+        } else {
+          this.createEnemy();
+        }
+        this._curEnemyTime = 0;
+      }
     }
   }
 
@@ -112,6 +134,7 @@ export class GameManager extends Component {
     bulletNode.setParent(this.bulletManager);
   }
 
+  // 随机敌机
   public createEnemy() {
     // 获取随机数
     const whichEnemy = math.randomRangeInt(1, 3);
@@ -129,5 +152,29 @@ export class GameManager extends Component {
     const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
     enemyPlaneComp.show(speed);
     enemyNode.setParent(this.node);
+  }
+
+  // 一字型组合敌机
+  public createCombination1() {
+    const enemyArr = new Array<Node>(5);
+    for (let i = 0; i < enemyArr.length; i++) {
+      const enemyNode = instantiate(this.enemy02);
+      enemyNode.setPosition(-12 + i * 6, 0, -27);
+      const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
+      enemyPlaneComp.show(this.enemy1Speed);
+      enemyNode.setParent(this.node);
+    }
+  }
+
+  // 人字型组合敌机
+  public createCombination2() {
+    const enemyArr = new Array<Node>(5);
+    for (let i = 0; i < enemyArr.length; i++) {
+      const enemyNode = instantiate(this.enemy01);
+      enemyNode.setPosition(-12 + i * 6, 0, -27 - Math.abs(i - 2) * 6);
+      const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
+      enemyPlaneComp.show(this.enemy1Speed);
+      enemyNode.setParent(this.node);
+    }
   }
 }
