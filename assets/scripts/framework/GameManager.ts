@@ -9,6 +9,7 @@ import {
 } from "cc";
 import { bullet } from "../bullet/Bullet";
 import { EnemyPlane } from "../plane/EnemyPlane";
+import { Const } from "./Const";
 const { ccclass, property } = _decorator;
 
 // if (sys.Platform.WECHAT_GAME) {
@@ -49,11 +50,14 @@ export class GameManager extends Component {
   @property
   public enemyTime = 3;
   @property
-  public enemySpeed = 0.3;
+  public enemy1Speed = 0.3;
+  @property
+  public enemy2Speed = 0.5;
 
   private _curShootTime = 0;
   private _curEnemyTime = 0;
   private _isShooting = false;
+  private _combinationInterval = Const.combination.TYPE1;
 
   start() {
     this._init();
@@ -67,20 +71,35 @@ export class GameManager extends Component {
         this._curShootTime = 0;
       }
     }
-    this._curEnemyTime += deltaTime;
-    if (this._curEnemyTime > this.enemyTime) {
-      console.log("_curEnemyTime :>> ", this._curEnemyTime, this.enemyTime);
-      this.createEnemy();
-      this._curEnemyTime = 0;
+    if (this._combinationInterval === Const.combination.TYPE1) {
+      this._curEnemyTime += deltaTime;
+      if (this._curEnemyTime > this.enemyTime) {
+        this.createEnemy();
+        this._curEnemyTime = 0;
+      }
+    } else if (this._combinationInterval === Const.combination.TYPE2) {
+    } else {
     }
   }
 
   private _init() {
     this._curShootTime = this.shootTime;
+    this._changeCombination();
   }
 
   public isShooting(v: boolean) {
     this._isShooting = v;
+  }
+
+  // 更新组合状态
+  private _changeCombination() {
+    // 10s更新一次
+    this.schedule(() => {
+      this._combinationInterval++;
+      if (this._combinationInterval > Const.combination.TYPE3) {
+        this._combinationInterval = Const.combination.TYPE1;
+      }
+    }, 10);
   }
 
   public createBullet() {
@@ -94,11 +113,21 @@ export class GameManager extends Component {
   }
 
   public createEnemy() {
-    const enemyNode = instantiate(this.enemy01);
+    // 获取随机数
+    const whichEnemy = math.randomRangeInt(1, 3);
+    let enemyNode: Node | null = null;
+    let speed = 0;
+    if (whichEnemy === Const.enemyType.TYPE1) {
+      enemyNode = instantiate(this.enemy01);
+      speed = this.enemy1Speed;
+    } else {
+      enemyNode = instantiate(this.enemy02);
+      speed = this.enemy2Speed;
+    }
     const x = math.randomRangeInt(-12, 13);
     enemyNode.setPosition(x, 0, -27);
     const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
-    enemyPlaneComp.enemySpeed = this.enemySpeed;
+    enemyPlaneComp.show(speed);
     enemyNode.setParent(this.node);
   }
 }

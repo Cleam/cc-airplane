@@ -5,13 +5,12 @@ const OUT_OF_BOUND = 30;
 
 @ccclass("EnemyPlane")
 export class EnemyPlane extends Component {
-  @property
-  public enemySpeed = 0.2;
+  private _enemySpeed = 0.2;
   start() {}
 
   update(deltaTime: number) {
     const { x, y, z } = this.node.position;
-    const moveZ = z + this.enemySpeed;
+    const moveZ = z + this._enemySpeed;
     // console.log("moveZ :>> ", moveZ);
     this.node.setPosition(x, y, moveZ);
 
@@ -20,5 +19,9 @@ export class EnemyPlane extends Component {
       this.node.destroy();
       console.log("enemy plane destroy!");
     }
+  }
+
+  show(speed: number) {
+    this._enemySpeed = speed;
   }
 }
