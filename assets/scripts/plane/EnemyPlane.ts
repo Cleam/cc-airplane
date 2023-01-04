@@ -6,12 +6,13 @@ const OUT_OF_BOUND = 30;
 @ccclass("EnemyPlane")
 export class EnemyPlane extends Component {
   @property
-  enemySpeed = 0.3;
+  public enemySpeed = 0.2;
   start() {}
 
   update(deltaTime: number) {
     const { x, y, z } = this.node.position;
     const moveZ = z + this.enemySpeed;
+    // console.log("moveZ :>> ", moveZ);
     this.node.setPosition(x, y, moveZ);
 
     // 超出屏幕边界则销毁

@@ -606,7 +606,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": -3.088
+      "z": 0
     }
   },
   {
@@ -727,7 +727,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 526.7353951890034,
+    "_orthoHeight": 498.2015167930661,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -831,7 +831,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "planeSpeed": 4,
+    "planeSpeed": 8,
     "playerPlane": {
       "__id__": 12
     },
@@ -875,9 +875,19 @@
     "bulletManager": {
       "__id__": 39
     },
-    "shootTime": 0.1,
+    "shootTime": 0.3,
     "bulletSpeed": 1,
-    "_id": "d7pp7qK41NEopjCvogXmgl"
+    "enemy01": {
+      "__uuid__": "fea2365a-ebc8-4ef4-9497-3187798b96f0",
+      "__expectedType__": "cc.Prefab"
+    },
+    "enemy02": {
+      "__uuid__": "6c6cba36-fb67-457c-ba82-9ec4503302b6",
+      "__expectedType__": "cc.Prefab"
+    },
+    "enemyTime": 1,
+    "enemySpeed": 0.3,
+    "_id": "75ElkTlZ1BV56k2bvki1BY"
   },
   {
     "__type__": "cc.Node",
