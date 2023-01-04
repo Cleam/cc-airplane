@@ -168,10 +168,12 @@ export class GameManager extends Component {
 
   // 人字型组合敌机
   public createCombination2() {
-    const enemyArr = new Array<Node>(5);
+    const enemyArr = new Array<Node>(7);
     for (let i = 0; i < enemyArr.length; i++) {
       const enemyNode = instantiate(this.enemy01);
-      enemyNode.setPosition(-12 + i * 6, 0, -27 - Math.abs(i - 2) * 6);
+      // 0 1 2 3 4 5 6
+      // -27-3*4 -27-2*4 -27-1*4 -27-0*4 -27-1*4 -27-2*4 -27-3*4
+      enemyNode.setPosition(-12 + i * 4, 0, -27 - Math.abs(i - 3) * 4);
       const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
       enemyPlaneComp.show(this.enemy1Speed);
       enemyNode.setParent(this.node);
