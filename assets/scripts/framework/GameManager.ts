@@ -6,6 +6,7 @@ import {
   instantiate,
   sys,
   math,
+  Vec3,
 } from "cc";
 import { bullet } from "../bullet/Bullet";
 import { EnemyPlane } from "../plane/EnemyPlane";
@@ -53,6 +54,8 @@ export class GameManager extends Component {
   public enemy1Speed = 0.3;
   @property
   public enemy2Speed = 0.5;
+  @property
+  public enemyBulletSpeed = 0.6;
 
   private _curShootTime = 0;
   private _curEnemyTime = 0;
@@ -124,13 +127,25 @@ export class GameManager extends Component {
     }, 10);
   }
 
+  // 生成玩家子弹
   public createBullet() {
     const bulletNode = instantiate(this.bullet01);
     const pos = this.playerPlane.position;
     bulletNode.setPosition(pos.x, pos.y, pos.z - 2.5);
 
     const bulletComp = bulletNode.getComponent(bullet);
-    bulletComp.bulletSpeed = this.bulletSpeed;
+    bulletComp.show(this.bulletSpeed, false);
+    bulletNode.setParent(this.bulletManager);
+  }
+
+  // 生成敌机子弹
+  public createEnemyBullet(enemyPos: Vec3) {
+    // console.log("enemyPos :>> ", enemyPos);
+    const bulletNode = instantiate(this.bullet01);
+    bulletNode.setPosition(enemyPos.x, enemyPos.y, enemyPos.z + 2);
+
+    const bulletComp = bulletNode.getComponent(bullet);
+    bulletComp.show(this.enemyBulletSpeed, true);
     bulletNode.setParent(this.bulletManager);
   }
 
@@ -150,7 +165,7 @@ export class GameManager extends Component {
     const x = math.randomRangeInt(-12, 13);
     enemyNode.setPosition(x, 0, -27);
     const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
-    enemyPlaneComp.show(speed);
+    enemyPlaneComp.show(this, speed, true);
     enemyNode.setParent(this.node);
   }
 
@@ -161,7 +176,7 @@ export class GameManager extends Component {
       const enemyNode = instantiate(this.enemy02);
       enemyNode.setPosition(-12 + i * 6, 0, -27);
       const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
-      enemyPlaneComp.show(this.enemy1Speed);
+      enemyPlaneComp.show(this, this.enemy1Speed, false);
       enemyNode.setParent(this.node);
     }
   }
@@ -175,7 +190,7 @@ export class GameManager extends Component {
       // -27-3*4 -27-2*4 -27-1*4 -27-0*4 -27-1*4 -27-2*4 -27-3*4
       enemyNode.setPosition(-12 + i * 4, 0, -27 - Math.abs(i - 3) * 4);
       const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
-      enemyPlaneComp.show(this.enemy1Speed);
+      enemyPlaneComp.show(this, this.enemy1Speed, false);
       enemyNode.setParent(this.node);
     }
   }

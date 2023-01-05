@@ -875,7 +875,7 @@
     "bulletManager": {
       "__id__": 39
     },
-    "shootTime": 0.3,
+    "shootTime": 0.2,
     "bulletSpeed": 1,
     "enemy01": {
       "__uuid__": "fea2365a-ebc8-4ef4-9497-3187798b96f0",
@@ -888,6 +888,7 @@
     "enemyTime": 1,
     "enemy1Speed": 0.3,
     "enemy2Speed": 0.5,
+    "enemyBulletSpeed": 0.6,
     "_id": "75ElkTlZ1BV56k2bvki1BY"
   },
   {
@@ -985,7 +986,6 @@
     },
     "_enabled": false,
     "__prefab": null,
-    "bulletSpeed": 1,
     "_id": "69gPlcUs5HZaIxpal1DDUH"
   },
   {
