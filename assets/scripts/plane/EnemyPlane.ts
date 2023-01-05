@@ -1,4 +1,5 @@
-import { _decorator, Component } from "cc";
+import { _decorator, Component, Collider, ITriggerEvent } from "cc";
+import { Const } from "../framework/Const";
 import { GameManager } from "../framework/GameManager";
 const { ccclass, property } = _decorator;
 
@@ -15,7 +16,29 @@ export class EnemyPlane extends Component {
   // 游戏管理组件
   private _gameManager: GameManager = null;
   private _enemySpeed = 0.2;
-  start() {}
+
+  onEnable() {
+    const collider = this.node.getComponent(Collider);
+    collider.on("onTriggerEnter", this._onTriggerEnter, this);
+  }
+
+  onDisable() {
+    const collider = this.node.getComponent(Collider);
+    collider.off("onTriggerEnter", this._onTriggerEnter, this);
+  }
+
+  private _onTriggerEnter(event: ITriggerEvent) {
+    const otherColliderGroup = event.otherCollider.getGroup();
+    // 敌机与玩家飞机、玩家子弹碰撞
+    if (
+      otherColliderGroup === Const.collisionType.SELF_PLANE ||
+      otherColliderGroup === Const.collisionType.SELF_BULLET
+    ) {
+      // 敌机销毁
+      this.node.destroy();
+      console.log("enemy plane destroy!!");
+    }
+  }
 
   update(deltaTime: number) {
     const { x, y, z } = this.node.position;

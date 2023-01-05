@@ -132,7 +132,6 @@ export class GameManager extends Component {
     const bulletNode = instantiate(this.bullet01);
     const pos = this.playerPlane.position;
     bulletNode.setPosition(pos.x, pos.y, pos.z - 2.5);
-
     const bulletComp = bulletNode.getComponent(bullet);
     bulletComp.show(this.bulletSpeed, false);
     bulletNode.setParent(this.bulletManager);
@@ -143,7 +142,6 @@ export class GameManager extends Component {
     // console.log("enemyPos :>> ", enemyPos);
     const bulletNode = instantiate(this.bullet01);
     bulletNode.setPosition(enemyPos.x, enemyPos.y, enemyPos.z + 2);
-
     const bulletComp = bulletNode.getComponent(bullet);
     bulletComp.show(this.enemyBulletSpeed, true);
     bulletNode.setParent(this.bulletManager);

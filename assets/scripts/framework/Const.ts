@@ -10,4 +10,12 @@ export class Const {
     TYPE2: 2,
     TYPE3: 3,
   };
+
+  // 碰撞类型
+  public static collisionType = {
+    SELF_PLANE: 1 << 1,
+    ENEMY_PLANE: 1 << 2,
+    SELF_BULLET: 1 << 3,
+    ENEMY_BULLET: 1 << 4,
+  };
 }
