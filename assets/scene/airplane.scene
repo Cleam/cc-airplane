@@ -968,6 +968,21 @@
     "enemy1Speed": 0.3,
     "enemy2Speed": 0.5,
     "enemyBulletSpeed": 0.6,
+    "bulletPropS": {
+      "__uuid__": "df527fa5-a83b-4d8e-8a7b-336e790f80b5",
+      "__expectedType__": "cc.Prefab"
+    },
+    "bulletPropH": {
+      "__uuid__": "50648c2b-6e2b-44d4-8b7d-1cdbfdc46f58",
+      "__expectedType__": "cc.Prefab"
+    },
+    "bulletPropM": {
+      "__uuid__": "17a9fe83-adc8-454b-a271-7e8c63984311",
+      "__expectedType__": "cc.Prefab"
+    },
+    "bulletPropSSpeed": 0.1,
+    "bulletPropHSpeed": 0.09,
+    "bulletPropMSpeed": 0.08,
     "_id": "75ElkTlZ1BV56k2bvki1BY"
   },
   {

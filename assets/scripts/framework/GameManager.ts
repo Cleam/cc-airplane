@@ -9,16 +9,10 @@ import {
   BoxCollider,
 } from "cc";
 import { bullet } from "../bullet/Bullet";
+import { BulletProp } from "../bullet/BulletProp";
 import { EnemyPlane } from "../plane/EnemyPlane";
 import { Const } from "./Const";
 const { ccclass, property } = _decorator;
-
-// if (sys.Platform.WECHAT_GAME) {
-//   console.log("[Platform]", sys.Platform);
-//   wx.onShow((options) => {
-//     console.log("[onShow] options :>> ", options);
-//   });
-// }
 
 @ccclass("GameManager")
 export class GameManager extends Component {
@@ -57,10 +51,26 @@ export class GameManager extends Component {
   @property
   public enemyBulletSpeed = 0.6;
 
+  // 道具
+  @property(Prefab)
+  public bulletPropS: Prefab = null;
+  @property(Prefab)
+  public bulletPropH: Prefab = null;
+  @property(Prefab)
+  public bulletPropM: Prefab = null;
+  @property
+  public bulletPropSSpeed = 0.13;
+  @property
+  public bulletPropHSpeed = 0.12;
+  @property
+  public bulletPropMSpeed = 0.1;
+
   private _curShootTime = 0;
   private _curEnemyTime = 0;
   private _isShooting = false;
   private _combinationInterval = Const.combination.TYPE1;
+  // 当前子弹道具类型
+  private _bulletPropType = Const.propType.M;
 
   start() {
     this._init();
@@ -110,6 +120,9 @@ export class GameManager extends Component {
   private _init() {
     this._curShootTime = this.shootTime;
     this._changeCombination();
+
+    // dev
+    this.createBulletProp();
   }
 
   public isShooting(v: boolean) {
@@ -121,9 +134,10 @@ export class GameManager extends Component {
     // 10s更新一次
     this.schedule(() => {
       this._combinationInterval++;
-      if (this._combinationInterval > Const.combination.TYPE3) {
-        this._combinationInterval = Const.combination.TYPE1;
-      }
+      // if (this._combinationInterval > Const.combination.TYPE3) {
+      //   this._combinationInterval = Const.combination.TYPE1;
+      // }
+      this.createBulletProp();
     }, 10);
   }
 
@@ -185,7 +199,7 @@ export class GameManager extends Component {
     }
   }
 
-  // 人字型组合敌机
+  // V字型组合敌机
   public createCombination2() {
     const enemyArr = new Array<Node>(7);
     for (let i = 0; i < enemyArr.length; i++) {
@@ -197,5 +211,32 @@ export class GameManager extends Component {
       enemyPlaneComp.show(this, this.enemy1Speed, false);
       enemyNode.setParent(this.node);
     }
+  }
+
+  // 生成道具
+  public createBulletProp() {
+    // 获取随机数
+    const whichProp = math.randomRangeInt(1, 4);
+    let propNode: Node | null = null;
+    let speed = 0;
+    if (whichProp === Const.propType.H) {
+      propNode = instantiate(this.bulletPropH);
+      speed = this.bulletPropHSpeed;
+    } else if (whichProp === Const.propType.S) {
+      propNode = instantiate(this.bulletPropS);
+      speed = this.bulletPropSSpeed;
+    } else {
+      propNode = instantiate(this.bulletPropM);
+      speed = this.bulletPropMSpeed;
+    }
+    const x = math.randomRangeInt(-12, 13);
+    propNode.setPosition(x, 0, -27);
+    const bulletPropComp = propNode.getComponent(BulletProp);
+    bulletPropComp.show(this, speed);
+    propNode.setParent(this.node);
+  }
+
+  public changeBulletType(type: number) {
+    this._bulletPropType = type;
   }
 }
