@@ -25,4 +25,10 @@ export class Const {
     H: 2,
     S: 3,
   };
+
+  public static direction = {
+    LEFT: 1,
+    MIDDLE: 2,
+    RIGHT: 3,
+  };
 }

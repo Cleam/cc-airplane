@@ -7,6 +7,7 @@ import {
   math,
   Vec3,
   BoxCollider,
+  macro,
 } from "cc";
 import { bullet } from "../bullet/Bullet";
 import { BulletProp } from "../bullet/BulletProp";
@@ -33,7 +34,7 @@ export class GameManager extends Component {
   @property(Node)
   public bulletManager: Node | null = null;
   @property
-  public shootTime = 0.3;
+  public shootTime = 0.1;
   @property
   public bulletSpeed = 1;
 
@@ -80,7 +81,13 @@ export class GameManager extends Component {
     if (this._isShooting) {
       this._curShootTime += deltaTime;
       if (this._curShootTime > this.shootTime) {
-        this.createBullet();
+        if (this._bulletPropType === Const.propType.S) {
+          this.createBulletS();
+        } else if (this._bulletPropType === Const.propType.H) {
+          this.createBulletH();
+        } else {
+          this.createBulletM();
+        }
         this._curShootTime = 0;
       }
     }
@@ -122,7 +129,7 @@ export class GameManager extends Component {
     this._changeCombination();
 
     // dev
-    this.createBulletProp();
+    // this.createBulletProp();
   }
 
   public isShooting(v: boolean) {
@@ -131,18 +138,22 @@ export class GameManager extends Component {
 
   // 更新组合状态
   private _changeCombination() {
-    // 10s更新一次
-    this.schedule(() => {
-      this._combinationInterval++;
-      // if (this._combinationInterval > Const.combination.TYPE3) {
-      //   this._combinationInterval = Const.combination.TYPE1;
-      // }
-      this.createBulletProp();
-    }, 10);
+    // 10s改一次敌机出现模式和道具出现逻辑
+    this.schedule(this._changeMode, 10, macro.REPEAT_FOREVER);
   }
 
-  // 生成玩家子弹
-  public createBullet() {
+  // 模式更新
+  private _changeMode() {
+    this._combinationInterval++;
+    // if (this._combinationInterval > Const.combination.TYPE3) {
+    //   this._combinationInterval = Const.combination.TYPE1;
+    // }
+    // 生成道具
+    this.createBulletProp();
+  }
+
+  // 生成玩家子弹（单排）
+  public createBulletM() {
     const bulletNode = instantiate(this.bullet01);
     const pos = this.playerPlane.position;
     bulletNode.setPosition(pos.x, pos.y, pos.z - 2.5);
@@ -150,11 +161,50 @@ export class GameManager extends Component {
     bulletComp.show(this.bulletSpeed, false);
     bulletNode.setParent(this.bulletManager);
   }
+  // 生成玩家子弹（双排 并排发射）
+  public createBulletH() {
+    const pos = this.playerPlane.position;
+    // left
+    const bulletNodeLeft = instantiate(this.bullet03);
+    bulletNodeLeft.setPosition(pos.x - 1.2, pos.y, pos.z - 2.5);
+    const bulletCompLeft = bulletNodeLeft.getComponent(bullet);
+    bulletCompLeft.show(this.bulletSpeed, false);
+    bulletNodeLeft.setParent(this.bulletManager);
+    // right
+    const bulletNodeRight = instantiate(this.bullet03);
+    bulletNodeRight.setPosition(pos.x + 1.2, pos.y, pos.z - 2.5);
+    const bulletCompRight = bulletNodeRight.getComponent(bullet);
+    bulletCompRight.show(this.bulletSpeed, false);
+    bulletNodeRight.setParent(this.bulletManager);
+  }
+
+  // 生成玩家子弹（三排且发散发射）
+  public createBulletS() {
+    const pos = this.playerPlane.position;
+    // left
+    const bulletNodeLeft = instantiate(this.bullet05);
+    bulletNodeLeft.setPosition(pos.x - 1.2, pos.y, pos.z - 2.5);
+    const bulletCompLeft = bulletNodeLeft.getComponent(bullet);
+    bulletCompLeft.show(this.bulletSpeed, false, Const.direction.LEFT);
+    bulletNodeLeft.setParent(this.bulletManager);
+    // middle
+    const bulletNodeMiddle = instantiate(this.bullet05);
+    bulletNodeMiddle.setPosition(pos.x, pos.y, pos.z - 2.5);
+    const bulletCompMiddle = bulletNodeMiddle.getComponent(bullet);
+    bulletCompMiddle.show(this.bulletSpeed, false);
+    bulletNodeMiddle.setParent(this.bulletManager);
+    // right
+    const bulletNodeRight = instantiate(this.bullet05);
+    bulletNodeRight.setPosition(pos.x + 1.2, pos.y, pos.z - 2.5);
+    const bulletCompRight = bulletNodeRight.getComponent(bullet);
+    bulletCompRight.show(this.bulletSpeed, false, Const.direction.RIGHT);
+    bulletNodeRight.setParent(this.bulletManager);
+  }
 
   // 生成敌机子弹
   public createEnemyBullet(enemyPos: Vec3) {
     // console.log("enemyPos :>> ", enemyPos);
-    const bulletNode = instantiate(this.bullet01);
+    const bulletNode = instantiate(this.bullet02);
     bulletNode.setPosition(enemyPos.x, enemyPos.y, enemyPos.z + 2);
     const bulletComp = bulletNode.getComponent(bullet);
     bulletComp.show(this.enemyBulletSpeed, true);

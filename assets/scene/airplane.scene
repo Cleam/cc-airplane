@@ -954,7 +954,7 @@
     "bulletManager": {
       "__id__": 42
     },
-    "shootTime": 0.2,
+    "shootTime": 0.15,
     "bulletSpeed": 1,
     "enemy01": {
       "__uuid__": "fea2365a-ebc8-4ef4-9497-3187798b96f0",

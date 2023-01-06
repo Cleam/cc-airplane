@@ -235,8 +235,8 @@
     "__prefab": {
       "__id__": 12
     },
-    "_group": 1,
-    "_type": 1,
+    "_group": 8,
+    "_type": 4,
     "_mass": 1,
     "_allowSleep": true,
     "_linearDamping": 0.1,
