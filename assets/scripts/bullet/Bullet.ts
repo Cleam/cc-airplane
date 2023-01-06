@@ -1,5 +1,5 @@
-import { _decorator, Component, Node, Prefab } from "cc";
-const { ccclass, property } = _decorator;
+import { _decorator, Component, Collider, ITriggerEvent } from "cc";
+const { ccclass } = _decorator;
 
 const OUT_RANGE = 30;
 
@@ -8,7 +8,19 @@ export class bullet extends Component {
   private _bulletSpeed = 1;
   private _isEnemyBullet = false;
 
-  start() {}
+  onEnable() {
+    const collider = this.node.getComponent(Collider);
+    collider.on("onTriggerEnter", this._onTriggerEnter, this);
+  }
+
+  onDisable() {
+    const collider = this.node.getComponent(Collider);
+    collider.off("onTriggerEnter", this._onTriggerEnter, this);
+  }
+
+  private _onTriggerEnter(event: ITriggerEvent) {
+    this.node.destroy();
+  }
 
   update(deltaTime: number) {
     const { x, y, z } = this.node.position;

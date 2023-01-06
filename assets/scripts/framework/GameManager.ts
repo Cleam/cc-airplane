@@ -4,9 +4,9 @@ import {
   Node,
   Prefab,
   instantiate,
-  sys,
   math,
   Vec3,
+  BoxCollider,
 } from "cc";
 import { bullet } from "../bullet/Bullet";
 import { EnemyPlane } from "../plane/EnemyPlane";
@@ -145,6 +145,12 @@ export class GameManager extends Component {
     const bulletComp = bulletNode.getComponent(bullet);
     bulletComp.show(this.enemyBulletSpeed, true);
     bulletNode.setParent(this.bulletManager);
+
+    const bulletCollider = bulletNode.getComponent(BoxCollider);
+    // 修改敌机子弹的分组为敌机子弹组（默认玩家子弹组）
+    bulletCollider.setGroup(Const.collisionType.ENEMY_BULLET);
+    // 修改敌机子弹的掩码为玩家飞机
+    bulletCollider.setMask(Const.collisionType.SELF_PLANE);
   }
 
   // 随机敌机
