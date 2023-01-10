@@ -36,7 +36,7 @@ export class EnemyPlane extends Component {
     ) {
       // 敌机销毁
       this.node.destroy();
-      console.log("enemy plane destroy!!");
+      // 加分
       this._gameManager.addScore();
     }
   }
@@ -50,7 +50,6 @@ export class EnemyPlane extends Component {
     // 超出屏幕边界则销毁
     if (this.node.position.z > OUT_OF_BOUND) {
       this.node.destroy();
-      console.log("enemy plane destroy!");
     }
 
     // 需要发射子弹

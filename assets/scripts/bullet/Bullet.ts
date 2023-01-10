@@ -44,9 +44,9 @@ export class bullet extends Component {
       }
     }
 
+    // 超出屏幕销毁
     if (Math.abs(moveZ) > OUT_RANGE) {
       this.node.destroy();
-      console.log("bullet destroy");
     }
   }
 

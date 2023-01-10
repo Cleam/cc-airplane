@@ -52,9 +52,9 @@ export class BulletProp extends Component {
     }
     this.node.setPosition(moveX + this._bulletPropXSpeed, y, moveZ);
 
+    // 超出屏幕销毁
     if (moveZ > OUT_OF_BOUND) {
       this.node.destroy();
-      console.log("BulletProp destroy!!!");
     }
   }
 
