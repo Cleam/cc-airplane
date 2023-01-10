@@ -2,6 +2,7 @@ import { _decorator, Component, Collider, ITriggerEvent } from "cc";
 import { AudioManager } from "../framework/AudioManager";
 import { Const } from "../framework/Const";
 import { GameManager } from "../framework/GameManager";
+import { PoolManager } from "../framework/PoolManager";
 const { ccclass, property } = _decorator;
 
 const OUT_OF_BOUND = 30;
@@ -38,7 +39,8 @@ export class EnemyPlane extends Component {
       // 播放音效
       this._gameManager.playAudio("enemy");
       // 敌机销毁
-      this.node.destroy();
+      // this.node.destroy();
+      PoolManager.instance().putNode(this.node);
       // 加分
       this._gameManager.addScore();
     }
@@ -52,7 +54,8 @@ export class EnemyPlane extends Component {
 
     // 超出屏幕边界则销毁
     if (this.node.position.z > OUT_OF_BOUND) {
-      this.node.destroy();
+      // this.node.destroy();
+      PoolManager.instance().putNode(this.node);
     }
 
     // 需要发射子弹

@@ -1,5 +1,6 @@
 import { _decorator, Component, Collider, ITriggerEvent } from "cc";
 import { Const } from "../framework/Const";
+import { PoolManager } from "../framework/PoolManager";
 const { ccclass } = _decorator;
 
 const OUT_RANGE = 30;
@@ -22,7 +23,8 @@ export class bullet extends Component {
   }
 
   private _onTriggerEnter(event: ITriggerEvent) {
-    this.node.destroy();
+    // this.node.destroy();
+    PoolManager.instance().putNode(this.node);
   }
 
   update(deltaTime: number) {
@@ -46,7 +48,8 @@ export class bullet extends Component {
 
     // 超出屏幕销毁
     if (Math.abs(moveZ) > OUT_RANGE) {
-      this.node.destroy();
+      // this.node.destroy();
+      PoolManager.instance().putNode(this.node);
     }
   }
 

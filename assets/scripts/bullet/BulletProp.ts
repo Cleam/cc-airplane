@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, math, Collider, ITriggerEvent } from "cc";
 import { Const } from "../framework/Const";
 import { GameManager } from "../framework/GameManager";
+import { PoolManager } from "../framework/PoolManager";
 const { ccclass, property } = _decorator;
 
 const OUT_OF_BOUND = 30;
@@ -38,7 +39,8 @@ export class BulletProp extends Component {
         this._gameManager.changeBulletType(Const.propType.M);
       }
 
-      this.node.destroy();
+      // this.node.destroy();
+      PoolManager.instance().putNode(this.node);
     }
   }
 
@@ -54,7 +56,8 @@ export class BulletProp extends Component {
 
     // 超出屏幕销毁
     if (moveZ > OUT_OF_BOUND) {
-      this.node.destroy();
+      // this.node.destroy();
+      PoolManager.instance().putNode(this.node);
     }
   }
 
