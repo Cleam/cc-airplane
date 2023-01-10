@@ -20,9 +20,10 @@ export class bg extends Component {
   start() {}
 
   update(deltaTime: number) {
-    if (!this.gameManager.isGameStart) {
-      return;
-    }
+    // if (!this.gameManager.isGameStart) {
+    //   return;
+    // }
+
     const { z: z1 } = this.bg01.position;
     const { z: z2 } = this.bg02.position;
     const dist = this._bgSpeed * deltaTime;
