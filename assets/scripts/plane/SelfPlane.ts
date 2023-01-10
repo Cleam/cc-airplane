@@ -1,9 +1,23 @@
-import { _decorator, Component, Node, Collider, ITriggerEvent } from "cc";
+import { _decorator, Component, Collider, ITriggerEvent } from "cc";
 import { Const } from "../framework/Const";
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 @ccclass("SelfPlane")
 export class SelfPlane extends Component {
+  public lifeValue: number = 5;
+  private _curLifeValue: number = 0;
+  public isDead = false;
+
+  init() {
+    this.resetPos();
+    this._curLifeValue = this.lifeValue;
+    this.isDead = false;
+  }
+
+  public resetPos() {
+    this.node.setPosition(0, 0, 18);
+  }
+
   onEnable() {
     const collider = this.node.getComponent(Collider);
     collider.on("onTriggerEnter", this._onTriggerEnter, this);
@@ -22,7 +36,11 @@ export class SelfPlane extends Component {
       otherColliderGroup === Const.collisionType.ENEMY_BULLET
     ) {
       // 掉血逻辑
-      console.log("reduce blood!!!");
+      // console.log("reduce blood!!!");
+      this._curLifeValue--;
+      if (this._curLifeValue <= 0) {
+        this.isDead = true;
+      }
     }
   }
 

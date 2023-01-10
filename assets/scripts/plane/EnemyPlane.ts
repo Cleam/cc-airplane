@@ -37,6 +37,7 @@ export class EnemyPlane extends Component {
       // 敌机销毁
       this.node.destroy();
       console.log("enemy plane destroy!!");
+      this._gameManager.addScore();
     }
   }
 
