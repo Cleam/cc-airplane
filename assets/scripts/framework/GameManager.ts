@@ -15,6 +15,7 @@ import { bullet } from "../bullet/Bullet";
 import { BulletProp } from "../bullet/BulletProp";
 import { EnemyPlane } from "../plane/EnemyPlane";
 import { SelfPlane } from "../plane/SelfPlane";
+import { AudioManager } from "./AudioManager";
 import { Const } from "./Const";
 const { ccclass, property } = _decorator;
 
@@ -90,6 +91,10 @@ export class GameManager extends Component {
   @property(Animation)
   public overAnim: Animation = null;
 
+  // 音效
+  @property(AudioManager)
+  public audioEffect: AudioManager = null;
+
   private _curShootTime = 0;
   private _curEnemyTime = 0;
   private _isShooting = false;
@@ -124,6 +129,10 @@ export class GameManager extends Component {
           this.createBulletM();
         }
         this._curShootTime = 0;
+
+        // 播放子弹音效
+        const name = "bullet" + ((this._bulletPropType % 2) + 1);
+        this.playAudio(name);
       }
     }
     this._curEnemyTime += deltaTime;
@@ -204,6 +213,10 @@ export class GameManager extends Component {
 
   public isShooting(v: boolean) {
     this._isShooting = v;
+  }
+
+  public playAudio(name: string) {
+    this.audioEffect.play(name);
   }
 
   // 更新组合状态

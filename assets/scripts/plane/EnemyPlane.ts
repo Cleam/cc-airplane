@@ -1,4 +1,5 @@
 import { _decorator, Component, Collider, ITriggerEvent } from "cc";
+import { AudioManager } from "../framework/AudioManager";
 import { Const } from "../framework/Const";
 import { GameManager } from "../framework/GameManager";
 const { ccclass, property } = _decorator;
@@ -34,6 +35,8 @@ export class EnemyPlane extends Component {
       otherColliderGroup === Const.collisionType.SELF_PLANE ||
       otherColliderGroup === Const.collisionType.SELF_BULLET
     ) {
+      // 播放音效
+      this._gameManager.playAudio("enemy");
       // 敌机销毁
       this.node.destroy();
       // 加分

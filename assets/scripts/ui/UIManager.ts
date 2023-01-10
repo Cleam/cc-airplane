@@ -34,7 +34,7 @@ export class UIManager extends Component {
 
   // 再来一局
   public restart() {
-    console.log("restart!!!");
+    this.gameManager.playAudio("button");
     this.gamePage.active = true;
     this.gameOverPage.active = false;
     this.gameManager.gameStart();
@@ -42,6 +42,7 @@ export class UIManager extends Component {
 
   // 返回主页
   public returnMain() {
+    this.gameManager.playAudio("button");
     this.gameStartPage.active = true;
     this.gameOverPage.active = false;
     this.playerPlane.resetPos();
@@ -51,6 +52,7 @@ export class UIManager extends Component {
     if (this.gamePage.active) {
       this.gameManager?.isShooting(true);
     } else if (this.gameStartPage.active) {
+      this.gameManager.playAudio("button");
       this.gameStartPage.active = false;
       this.gamePage.active = true;
       this.gameManager.gameStart();
