@@ -95,6 +95,10 @@ export class GameManager extends Component {
   @property(AudioManager)
   public audioEffect: AudioManager = null;
 
+  // 敌机爆炸特效
+  @property(Prefab)
+  public enemyExplodePrefab: Prefab = null;
+
   private _curShootTime = 0;
   private _curEnemyTime = 0;
   private _isShooting = false;
@@ -402,6 +406,15 @@ export class GameManager extends Component {
     propNode.setPosition(x, 0, -27);
     const bulletPropComp = propNode.getComponent(BulletProp);
     bulletPropComp.show(this, speed);
+  }
+
+  // 生成敌机爆炸💥特效
+  public createEnemyExplode(pos: Vec3) {
+    const enemyExplode = PoolManager.instance().getNode(
+      this.enemyExplodePrefab,
+      this.node
+    );
+    enemyExplode.setPosition(pos);
   }
 
   public changeBulletType(type: number) {

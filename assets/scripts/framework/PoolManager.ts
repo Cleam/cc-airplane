@@ -26,6 +26,7 @@ export class PoolManager {
   // 存入节点
   public putNode(node: Node) {
     const name = node.name;
+    // console.log("putNode name :>> ", name);
     node.parent = null;
     if (!this._dictNodePool[name]) {
       this._dictNodePool[name] = new NodePool();
@@ -36,6 +37,7 @@ export class PoolManager {
   // 获取节点
   public getNode(prefab: Prefab, parent: Node) {
     const name = prefab.name;
+    // console.log("getNode name :>> ", name);
     let node: Node = null;
     // this._dictPrefab[name] = prefab;
     const pool = this._dictNodePool[name];

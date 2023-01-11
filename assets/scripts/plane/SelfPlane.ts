@@ -4,12 +4,16 @@ import {
   Collider,
   ITriggerEvent,
   AudioSource,
+  Node,
 } from "cc";
 import { Const } from "../framework/Const";
-const { ccclass } = _decorator;
+const { ccclass, property } = _decorator;
 
 @ccclass("SelfPlane")
 export class SelfPlane extends Component {
+  @property(Node)
+  public explode: Node = null;
+
   private _audioSource: AudioSource = null;
 
   public lifeValue: number = 5;
@@ -26,6 +30,8 @@ export class SelfPlane extends Component {
     this.resetPos();
     this._curLifeValue = this.lifeValue;
     this.isDead = false;
+    this.explode.active = false;
+    // console.log("this.node :>> ", this.node);
   }
 
   public resetPos() {
@@ -55,6 +61,7 @@ export class SelfPlane extends Component {
       if (this._curLifeValue <= 0) {
         this._audioSource.play();
         this.isDead = true;
+        this.explode.active = true;
       }
     }
   }

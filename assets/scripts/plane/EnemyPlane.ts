@@ -1,4 +1,4 @@
-import { _decorator, Component, Collider, ITriggerEvent } from "cc";
+import { _decorator, Component, Collider, ITriggerEvent, Prefab } from "cc";
 import { AudioManager } from "../framework/AudioManager";
 import { Const } from "../framework/Const";
 import { GameManager } from "../framework/GameManager";
@@ -11,6 +11,7 @@ const OUT_OF_BOUND = 30;
 export class EnemyPlane extends Component {
   @property
   public createBulletTime = 0.5;
+
   // 子弹创建周期时间
   private _needBullet = false;
   // 当前创建子弹时间线
@@ -43,6 +44,8 @@ export class EnemyPlane extends Component {
       PoolManager.instance().putNode(this.node);
       // 加分
       this._gameManager.addScore();
+      // 爆炸💥特效
+      this._gameManager.createEnemyExplode(this.node.position);
     }
   }
 
