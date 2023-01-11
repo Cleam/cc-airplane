@@ -14,6 +14,12 @@ export class SelfPlane extends Component {
   @property(Node)
   public explode: Node = null;
 
+  // 血条
+  @property(Node)
+  public blood: Node = null;
+
+  private bloodFace: Node = null;
+
   private _audioSource: AudioSource = null;
 
   public lifeValue: number = 5;
@@ -23,6 +29,8 @@ export class SelfPlane extends Component {
   start() {
     // 获取音频资源
     this._audioSource = this.getComponent(AudioSource);
+    // 血条进度条
+    this.bloodFace = this.blood.getChildByName("face");
   }
   update(deltaTime: number) {}
 
@@ -31,7 +39,7 @@ export class SelfPlane extends Component {
     this._curLifeValue = this.lifeValue;
     this.isDead = false;
     this.explode.active = false;
-    // console.log("this.node :>> ", this.node);
+    this.bloodFace.setScale(1, 1, 1);
   }
 
   public resetPos() {
@@ -55,13 +63,18 @@ export class SelfPlane extends Component {
       otherColliderGroup === Const.collisionType.ENEMY_PLANE ||
       otherColliderGroup === Const.collisionType.ENEMY_BULLET
     ) {
+      // 血条一开始不显示，被伤害后开始显示
+      if (this._curLifeValue === this.lifeValue) {
+        this.blood.active = true;
+      }
       // 掉血逻辑
-      // console.log("reduce blood!!!");
       this._curLifeValue--;
+      this.bloodFace.setScale(this._curLifeValue / this.lifeValue, 1, 1);
       if (this._curLifeValue <= 0) {
         this._audioSource.play();
         this.isDead = true;
         this.explode.active = true;
+        this.blood.active = false;
       }
     }
   }
