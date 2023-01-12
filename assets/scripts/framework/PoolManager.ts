@@ -15,7 +15,7 @@ export class PoolManager {
   private _dictNodePool: IDictNodePool = {};
   // private _dictPrefab: IDictPrefab = {};
 
-  public static instance() {
+  public static get instance() {
     if (!this._instance) {
       this._instance = new PoolManager();
     }

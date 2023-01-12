@@ -40,7 +40,7 @@ export class BulletProp extends Component {
       }
 
       // this.node.destroy();
-      PoolManager.instance().putNode(this.node);
+      PoolManager.instance.putNode(this.node);
     }
   }
 
@@ -57,7 +57,7 @@ export class BulletProp extends Component {
     // 超出屏幕销毁
     if (moveZ > OUT_OF_BOUND) {
       // this.node.destroy();
-      PoolManager.instance().putNode(this.node);
+      PoolManager.instance.putNode(this.node);
     }
   }
 

@@ -7,7 +7,7 @@ export class EnemyExplode extends Component {
   onEnable() {
     // 3s后回收资源
     this.scheduleOnce(() => {
-      PoolManager.instance().putNode(this.node);
+      PoolManager.instance.putNode(this.node);
     }, 3);
   }
 

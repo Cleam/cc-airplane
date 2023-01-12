@@ -41,7 +41,7 @@ export class EnemyPlane extends Component {
       this._gameManager.playAudio("enemy");
       // 敌机销毁
       // this.node.destroy();
-      PoolManager.instance().putNode(this.node);
+      PoolManager.instance.putNode(this.node);
       // 加分
       this._gameManager.addScore();
       // 爆炸💥特效
@@ -58,7 +58,7 @@ export class EnemyPlane extends Component {
     // 超出屏幕边界则销毁
     if (this.node.position.z > OUT_OF_BOUND) {
       // this.node.destroy();
-      PoolManager.instance().putNode(this.node);
+      PoolManager.instance.putNode(this.node);
     }
 
     // 需要发射子弹

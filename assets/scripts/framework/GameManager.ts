@@ -243,7 +243,7 @@ export class GameManager extends Component {
   public createBulletM() {
     // const bulletNode = instantiate(this.bullet01);
     // bulletNode.setParent(this.bulletManager);
-    const bulletNode = PoolManager.instance().getNode(
+    const bulletNode = PoolManager.instance.getNode(
       this.bullet01,
       this.bulletManager
     );
@@ -258,7 +258,7 @@ export class GameManager extends Component {
     // left
     // const bulletNodeLeft = instantiate(this.bullet03);
     // bulletNodeLeft.setParent(this.bulletManager);
-    const bulletNodeLeft = PoolManager.instance().getNode(
+    const bulletNodeLeft = PoolManager.instance.getNode(
       this.bullet03,
       this.bulletManager
     );
@@ -268,7 +268,7 @@ export class GameManager extends Component {
     // right
     // const bulletNodeRight = instantiate(this.bullet03);
     // bulletNodeRight.setParent(this.bulletManager);
-    const bulletNodeRight = PoolManager.instance().getNode(
+    const bulletNodeRight = PoolManager.instance.getNode(
       this.bullet03,
       this.bulletManager
     );
@@ -283,7 +283,7 @@ export class GameManager extends Component {
     // left
     // const bulletNodeLeft = instantiate(this.bullet05);
     // bulletNodeLeft.setParent(this.bulletManager);
-    const bulletNodeLeft = PoolManager.instance().getNode(
+    const bulletNodeLeft = PoolManager.instance.getNode(
       this.bullet05,
       this.bulletManager
     );
@@ -293,7 +293,7 @@ export class GameManager extends Component {
     // middle
     // const bulletNodeMiddle = instantiate(this.bullet05);
     // bulletNodeMiddle.setParent(this.bulletManager);
-    const bulletNodeMiddle = PoolManager.instance().getNode(
+    const bulletNodeMiddle = PoolManager.instance.getNode(
       this.bullet05,
       this.bulletManager
     );
@@ -303,7 +303,7 @@ export class GameManager extends Component {
     // right
     // const bulletNodeRight = instantiate(this.bullet05);
     // bulletNodeRight.setParent(this.bulletManager);
-    const bulletNodeRight = PoolManager.instance().getNode(
+    const bulletNodeRight = PoolManager.instance.getNode(
       this.bullet05,
       this.bulletManager
     );
@@ -317,7 +317,7 @@ export class GameManager extends Component {
     // console.log("enemyPos :>> ", enemyPos);
     // const bulletNode = instantiate(this.bullet02);
     // bulletNode.setParent(this.bulletManager);
-    const bulletNode = PoolManager.instance().getNode(
+    const bulletNode = PoolManager.instance.getNode(
       this.bullet02,
       this.bulletManager
     );
@@ -340,11 +340,11 @@ export class GameManager extends Component {
     let speed = 0;
     if (whichEnemy === Const.enemyType.TYPE1) {
       // enemyNode = instantiate(this.enemy01);
-      enemyNode = PoolManager.instance().getNode(this.enemy01, this.node);
+      enemyNode = PoolManager.instance.getNode(this.enemy01, this.node);
       speed = this.enemy1Speed;
     } else {
       // enemyNode = instantiate(this.enemy02);
-      enemyNode = PoolManager.instance().getNode(this.enemy02, this.node);
+      enemyNode = PoolManager.instance.getNode(this.enemy02, this.node);
       speed = this.enemy2Speed;
     }
     // enemyNode.setParent(this.node);
@@ -360,7 +360,7 @@ export class GameManager extends Component {
     for (let i = 0; i < enemyArr.length; i++) {
       // const enemyNode = instantiate(this.enemy02);
       // enemyNode.setParent(this.node);
-      const enemyNode = PoolManager.instance().getNode(this.enemy02, this.node);
+      const enemyNode = PoolManager.instance.getNode(this.enemy02, this.node);
       enemyNode.setPosition(-12 + i * 6, 0, -27);
       const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
       enemyPlaneComp.show(this, this.enemy1Speed, false);
@@ -373,7 +373,7 @@ export class GameManager extends Component {
     for (let i = 0; i < enemyArr.length; i++) {
       // const enemyNode = instantiate(this.enemy01);
       // enemyNode.setParent(this.node);
-      const enemyNode = PoolManager.instance().getNode(this.enemy01, this.node);
+      const enemyNode = PoolManager.instance.getNode(this.enemy01, this.node);
       // 0 1 2 3 4 5 6
       // -27-3*4 -27-2*4 -27-1*4 -27-0*4 -27-1*4 -27-2*4 -27-3*4
       enemyNode.setPosition(-12 + i * 4, 0, -27 - Math.abs(i - 3) * 4);
@@ -390,15 +390,15 @@ export class GameManager extends Component {
     let speed = 0;
     if (whichProp === Const.propType.H) {
       // propNode = instantiate(this.bulletPropH);
-      propNode = PoolManager.instance().getNode(this.bulletPropH, this.node);
+      propNode = PoolManager.instance.getNode(this.bulletPropH, this.node);
       speed = this.bulletPropHSpeed;
     } else if (whichProp === Const.propType.S) {
       // propNode = instantiate(this.bulletPropS);
-      propNode = PoolManager.instance().getNode(this.bulletPropS, this.node);
+      propNode = PoolManager.instance.getNode(this.bulletPropS, this.node);
       speed = this.bulletPropSSpeed;
     } else {
       // propNode = instantiate(this.bulletPropM);
-      propNode = PoolManager.instance().getNode(this.bulletPropM, this.node);
+      propNode = PoolManager.instance.getNode(this.bulletPropM, this.node);
       speed = this.bulletPropMSpeed;
     }
     // propNode.setParent(this.node);
@@ -410,7 +410,7 @@ export class GameManager extends Component {
 
   // 生成敌机爆炸💥特效
   public createEnemyExplode(pos: Vec3) {
-    const enemyExplode = PoolManager.instance().getNode(
+    const enemyExplode = PoolManager.instance.getNode(
       this.enemyExplodePrefab,
       this.node
     );
