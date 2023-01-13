@@ -2,15 +2,15 @@
   "ver": "2.3.1",
   "importer": "fbx",
   "imported": true,
-  "uuid": "e61f4c0c-e48b-4e00-8f6c-c7b7de52a394",
+  "uuid": "bbc51a87-42a0-4e01-9afa-415ebfd0e545",
   "files": [],
   "subMetas": {
-    "fa5f7": {
+    "d2b5a": {
       "importer": "gltf-mesh",
-      "uuid": "e61f4c0c-e48b-4e00-8f6c-c7b7de52a394@fa5f7",
+      "uuid": "bbc51a87-42a0-4e01-9afa-415ebfd0e545@d2b5a",
       "displayName": "",
-      "id": "fa5f7",
-      "name": "plane01.mesh",
+      "id": "d2b5a",
+      "name": "plane02.mesh",
       "userData": {
         "gltfIndex": 0
       },
@@ -22,12 +22,12 @@
       ],
       "subMetas": {}
     },
-    "aa4e8": {
+    "8ae39": {
       "importer": "gltf-material",
-      "uuid": "e61f4c0c-e48b-4e00-8f6c-c7b7de52a394@aa4e8",
+      "uuid": "bbc51a87-42a0-4e01-9afa-415ebfd0e545@8ae39",
       "displayName": "",
-      "id": "aa4e8",
-      "name": "plane01.material",
+      "id": "8ae39",
+      "name": "plane02.material",
       "userData": {
         "gltfIndex": 0
       },
@@ -38,12 +38,12 @@
       ],
       "subMetas": {}
     },
-    "c13c3": {
+    "2d8d8": {
       "importer": "gltf-scene",
-      "uuid": "e61f4c0c-e48b-4e00-8f6c-c7b7de52a394@c13c3",
+      "uuid": "bbc51a87-42a0-4e01-9afa-415ebfd0e545@2d8d8",
       "displayName": "",
-      "id": "c13c3",
-      "name": "plane01.prefab",
+      "id": "2d8d8",
+      "name": "plane02.FBX.prefab",
       "userData": {
         "gltfIndex": 0
       },
@@ -60,18 +60,18 @@
     "fbx": {
       "smartMaterialEnabled": true
     },
-    "redirect": "e61f4c0c-e48b-4e00-8f6c-c7b7de52a394@c13c3",
+    "redirect": "bbc51a87-42a0-4e01-9afa-415ebfd0e545@2d8d8",
     "assetFinder": {
       "meshes": [
-        "e61f4c0c-e48b-4e00-8f6c-c7b7de52a394@fa5f7"
+        "bbc51a87-42a0-4e01-9afa-415ebfd0e545@d2b5a"
       ],
       "skeletons": [],
       "textures": [],
       "materials": [
-        "e61f4c0c-e48b-4e00-8f6c-c7b7de52a394@aa4e8"
+        "bbc51a87-42a0-4e01-9afa-415ebfd0e545@8ae39"
       ],
       "scenes": [
-        "e61f4c0c-e48b-4e00-8f6c-c7b7de52a394@c13c3"
+        "bbc51a87-42a0-4e01-9afa-415ebfd0e545@2d8d8"
       ]
     }
   }

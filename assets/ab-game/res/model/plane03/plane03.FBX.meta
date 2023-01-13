@@ -2,15 +2,15 @@
   "ver": "2.3.1",
   "importer": "fbx",
   "imported": true,
-  "uuid": "bbc51a87-42a0-4e01-9afa-415ebfd0e545",
+  "uuid": "bf8f66af-2703-4052-9df0-2a30a0ceb054",
   "files": [],
   "subMetas": {
-    "d2b5a": {
+    "76a7a": {
       "importer": "gltf-mesh",
-      "uuid": "bbc51a87-42a0-4e01-9afa-415ebfd0e545@d2b5a",
+      "uuid": "bf8f66af-2703-4052-9df0-2a30a0ceb054@76a7a",
       "displayName": "",
-      "id": "d2b5a",
-      "name": "plane02.mesh",
+      "id": "76a7a",
+      "name": "plane03.mesh",
       "userData": {
         "gltfIndex": 0
       },
@@ -22,12 +22,12 @@
       ],
       "subMetas": {}
     },
-    "8ae39": {
+    "6a471": {
       "importer": "gltf-material",
-      "uuid": "bbc51a87-42a0-4e01-9afa-415ebfd0e545@8ae39",
+      "uuid": "bf8f66af-2703-4052-9df0-2a30a0ceb054@6a471",
       "displayName": "",
-      "id": "8ae39",
-      "name": "plane02.material",
+      "id": "6a471",
+      "name": "plane03.material",
       "userData": {
         "gltfIndex": 0
       },
@@ -38,12 +38,12 @@
       ],
       "subMetas": {}
     },
-    "2d8d8": {
+    "eefaf": {
       "importer": "gltf-scene",
-      "uuid": "bbc51a87-42a0-4e01-9afa-415ebfd0e545@2d8d8",
+      "uuid": "bf8f66af-2703-4052-9df0-2a30a0ceb054@eefaf",
       "displayName": "",
-      "id": "2d8d8",
-      "name": "plane02.prefab",
+      "id": "eefaf",
+      "name": "plane03.FBX.prefab",
       "userData": {
         "gltfIndex": 0
       },
@@ -60,18 +60,18 @@
     "fbx": {
       "smartMaterialEnabled": true
     },
-    "redirect": "bbc51a87-42a0-4e01-9afa-415ebfd0e545@2d8d8",
+    "redirect": "bf8f66af-2703-4052-9df0-2a30a0ceb054@eefaf",
     "assetFinder": {
       "meshes": [
-        "bbc51a87-42a0-4e01-9afa-415ebfd0e545@d2b5a"
+        "bf8f66af-2703-4052-9df0-2a30a0ceb054@76a7a"
       ],
       "skeletons": [],
       "textures": [],
       "materials": [
-        "bbc51a87-42a0-4e01-9afa-415ebfd0e545@8ae39"
+        "bf8f66af-2703-4052-9df0-2a30a0ceb054@6a471"
       ],
       "scenes": [
-        "bbc51a87-42a0-4e01-9afa-415ebfd0e545@2d8d8"
+        "bf8f66af-2703-4052-9df0-2a30a0ceb054@eefaf"
       ]
     }
   }
