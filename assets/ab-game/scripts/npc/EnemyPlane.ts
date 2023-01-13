@@ -1,8 +1,7 @@
-import { _decorator, Component, Collider, ITriggerEvent, Prefab } from "cc";
-import { AudioManager } from "../../../main/scripts/framework/AudioManager";
-import { Const } from "../Const";
-import { GameManager } from "../../../main/scripts/framework/GameManager";
-import { PoolManager } from "../../../main/scripts/framework/PoolManager";
+import { _decorator, Component, Collider, ITriggerEvent } from "cc";
+import { Const } from "../base/Const";
+import { GameManager } from "../GameManager";
+import { PoolManager } from "../base/PoolManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("EnemyPlane")

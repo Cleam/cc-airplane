@@ -2,15 +2,14 @@ import {
   _decorator,
   Component,
   Node,
-  input,
   Input,
   EventTouch,
   AudioSource,
 } from "cc";
-import { GameManager } from "../framework/GameManager";
-import { SelfPlane } from "../../../ab-game/scripts/plane/SelfPlane";
-import { Const } from "../../../ab-game/scripts/Const";
-import { AudioManager } from "../framework/AudioManager";
+import { GameManager } from "../GameManager";
+import { SelfPlane } from "../npc/SelfPlane";
+import { Const } from "../base/Const";
+import { AudioManager } from "../base/AudioManager";
 
 const { ccclass, property } = _decorator;
 

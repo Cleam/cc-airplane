@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, AudioClip, AudioSource } from "cc";
+import { _decorator, Component, AudioClip, AudioSource } from "cc";
 const { ccclass, property } = _decorator;
 
 interface IAudioClip {

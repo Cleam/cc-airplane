@@ -1,5 +1,5 @@
 import { _decorator, Component, Node } from "cc";
-import { PoolManager } from "../../../main/scripts/framework/PoolManager";
+import { PoolManager } from "../base/PoolManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("EnemyExplode")

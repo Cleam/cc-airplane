@@ -1,5 +1,5 @@
 import { _decorator, Component, Node } from "cc";
-import { GameManager } from "./framework/GameManager";
+import { GameManager } from "../GameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("bg")

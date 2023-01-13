@@ -1,7 +1,7 @@
 import { _decorator, Component, Node, math, Collider, ITriggerEvent } from "cc";
-import { Const } from "../Const";
-import { GameManager } from "../../../main/scripts/framework/GameManager";
-import { PoolManager } from "../../../main/scripts/framework/PoolManager";
+import { Const } from "../base/Const";
+import { GameManager } from "../GameManager";
+import { PoolManager } from "../base/PoolManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("BulletProp")

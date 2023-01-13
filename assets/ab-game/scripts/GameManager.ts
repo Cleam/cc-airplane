@@ -10,13 +10,13 @@ import {
   Label,
   Animation,
 } from "cc";
-import { bullet } from "../../../ab-game/scripts/bullet/Bullet";
-import { BulletProp } from "../../../ab-game/scripts/bullet/BulletProp";
-import { EnemyPlane } from "../../../ab-game/scripts/plane/EnemyPlane";
-import { SelfPlane } from "../../../ab-game/scripts/plane/SelfPlane";
-import { AudioManager } from "./AudioManager";
-import { Const } from "../../../ab-game/scripts/Const";
-import { PoolManager } from "./PoolManager";
+import { bullet } from "./npc/Bullet";
+import { BulletProp } from "./npc/BulletProp";
+import { EnemyPlane } from "./npc/EnemyPlane";
+import { SelfPlane } from "./npc/SelfPlane";
+import { AudioManager } from "./base/AudioManager";
+import { Const } from "./base/Const";
+import { PoolManager } from "./base/PoolManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("GameManager")

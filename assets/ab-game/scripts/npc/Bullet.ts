@@ -1,6 +1,6 @@
 import { _decorator, Component, Collider, ITriggerEvent } from "cc";
-import { Const } from "../Const";
-import { PoolManager } from "../../../main/scripts/framework/PoolManager";
+import { Const } from "../base/Const";
+import { PoolManager } from "../base/PoolManager";
 const { ccclass } = _decorator;
 
 @ccclass("bullet")
