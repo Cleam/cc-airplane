@@ -1,6 +1,16 @@
-import { _decorator, Component, Node, input, Input, EventTouch } from "cc";
+import {
+  _decorator,
+  Component,
+  Node,
+  input,
+  Input,
+  EventTouch,
+  AudioSource,
+} from "cc";
 import { GameManager } from "../framework/GameManager";
-import { SelfPlane } from "../plane/SelfPlane";
+import { SelfPlane } from "../../../ab-game/scripts/plane/SelfPlane";
+import { Const } from "../../../ab-game/scripts/Const";
+import { AudioManager } from "../framework/AudioManager";
 
 const { ccclass, property } = _decorator;
 
@@ -21,6 +31,16 @@ export class UIManager extends Component {
   public gamePage: Node = null;
   @property(Node)
   public gameOverPage: Node = null;
+  @property(Node)
+  public volume: Node = null;
+  @property(Node)
+  public mute: Node = null;
+
+  // 音效
+  @property(AudioManager)
+  public audioEffect: AudioManager = null;
+
+  private _bgmSource: AudioSource = null;
 
   start() {
     this.node.on(Input.EventType.TOUCH_START, this._touchStart, this);
@@ -73,11 +93,28 @@ export class UIManager extends Component {
     }
 
     const delta = event.getDelta();
-    const { x, y, z } = this.playerPlane.node.position;
-    this.playerPlane.node.setPosition(
-      x + delta.x * this.planeSpeed * 0.01,
-      y,
-      z - delta.y * this.planeSpeed * 0.01
-    );
+    let { x, y, z } = this.playerPlane.node.position;
+    x = x + delta.x * this.planeSpeed * 0.01;
+    z = z - delta.y * this.planeSpeed * 0.01;
+    if (x < -Const.boundary.x) {
+      x = -Const.boundary.x;
+    } else if (x > Const.boundary.x) {
+      x = Const.boundary.x;
+    }
+    this.playerPlane.node.setPosition(x, y, z);
+  }
+
+  // 播放声音
+  public music() {
+    this.audioEffect.music();
+    this.volume.active = true;
+    this.mute.active = false;
+  }
+
+  // 静音
+  public stop() {
+    this.audioEffect.stop();
+    this.volume.active = false;
+    this.mute.active = true;
   }
 }

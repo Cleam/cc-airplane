@@ -1,11 +1,9 @@
 import { _decorator, Component, Collider, ITriggerEvent, Prefab } from "cc";
-import { AudioManager } from "../framework/AudioManager";
-import { Const } from "../framework/Const";
-import { GameManager } from "../framework/GameManager";
-import { PoolManager } from "../framework/PoolManager";
+import { AudioManager } from "../../../main/scripts/framework/AudioManager";
+import { Const } from "../Const";
+import { GameManager } from "../../../main/scripts/framework/GameManager";
+import { PoolManager } from "../../../main/scripts/framework/PoolManager";
 const { ccclass, property } = _decorator;
-
-const OUT_OF_BOUND = 30;
 
 @ccclass("EnemyPlane")
 export class EnemyPlane extends Component {
@@ -56,7 +54,7 @@ export class EnemyPlane extends Component {
     this.node.setPosition(x, y, moveZ);
 
     // 超出屏幕边界则销毁
-    if (this.node.position.z > OUT_OF_BOUND) {
+    if (this.node.position.z > Const.outOfScreen.z) {
       // this.node.destroy();
       PoolManager.instance.putNode(this.node);
     }

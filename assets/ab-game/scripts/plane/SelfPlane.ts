@@ -6,7 +6,7 @@ import {
   AudioSource,
   Node,
 } from "cc";
-import { Const } from "../framework/Const";
+import { Const } from "../Const";
 const { ccclass, property } = _decorator;
 
 @ccclass("SelfPlane")

@@ -1,10 +1,8 @@
 import { _decorator, Component, Node, math, Collider, ITriggerEvent } from "cc";
-import { Const } from "../framework/Const";
-import { GameManager } from "../framework/GameManager";
-import { PoolManager } from "../framework/PoolManager";
+import { Const } from "../Const";
+import { GameManager } from "../../../main/scripts/framework/GameManager";
+import { PoolManager } from "../../../main/scripts/framework/PoolManager";
 const { ccclass, property } = _decorator;
-
-const OUT_OF_BOUND = 30;
 
 @ccclass("BulletProp")
 export class BulletProp extends Component {
@@ -46,16 +44,16 @@ export class BulletProp extends Component {
 
   update(deltaTime: number) {
     const { x, y, z } = this.node.position;
-    // const randomX = math.randomRangeInt(-12, 13);
+    // const randomX = math.randomRangeInt(-Const.boundary.x, Const.boundary.x + 1);
     const moveZ = z + this._bulletPropSpeed;
     let moveX = x;
-    if (Math.abs(x) > 12) {
+    if (Math.abs(x) > Const.boundary.x) {
       this._bulletPropXSpeed = -this._bulletPropXSpeed;
     }
     this.node.setPosition(moveX + this._bulletPropXSpeed, y, moveZ);
 
     // 超出屏幕销毁
-    if (moveZ > OUT_OF_BOUND) {
+    if (moveZ > Const.outOfScreen.z) {
       // this.node.destroy();
       PoolManager.instance.putNode(this.node);
     }

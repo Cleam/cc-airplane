@@ -10,12 +10,12 @@ import {
   Label,
   Animation,
 } from "cc";
-import { bullet } from "../bullet/Bullet";
-import { BulletProp } from "../bullet/BulletProp";
-import { EnemyPlane } from "../plane/EnemyPlane";
-import { SelfPlane } from "../plane/SelfPlane";
+import { bullet } from "../../../ab-game/scripts/bullet/Bullet";
+import { BulletProp } from "../../../ab-game/scripts/bullet/BulletProp";
+import { EnemyPlane } from "../../../ab-game/scripts/plane/EnemyPlane";
+import { SelfPlane } from "../../../ab-game/scripts/plane/SelfPlane";
 import { AudioManager } from "./AudioManager";
-import { Const } from "./Const";
+import { Const } from "../../../ab-game/scripts/Const";
 import { PoolManager } from "./PoolManager";
 const { ccclass, property } = _decorator;
 
@@ -348,7 +348,7 @@ export class GameManager extends Component {
       speed = this.enemy2Speed;
     }
     // enemyNode.setParent(this.node);
-    const x = math.randomRangeInt(-12, 13);
+    const x = math.randomRangeInt(-Const.boundary.x, Const.boundary.x + 1);
     enemyNode.setPosition(x, 0, -27);
     const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
     enemyPlaneComp.show(this, speed, true);
@@ -361,7 +361,7 @@ export class GameManager extends Component {
       // const enemyNode = instantiate(this.enemy02);
       // enemyNode.setParent(this.node);
       const enemyNode = PoolManager.instance.getNode(this.enemy02, this.node);
-      enemyNode.setPosition(-12 + i * 6, 0, -27);
+      enemyNode.setPosition(-Const.boundary.x + i * 6, 0, -27);
       const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
       enemyPlaneComp.show(this, this.enemy1Speed, false);
     }
@@ -376,7 +376,11 @@ export class GameManager extends Component {
       const enemyNode = PoolManager.instance.getNode(this.enemy01, this.node);
       // 0 1 2 3 4 5 6
       // -27-3*4 -27-2*4 -27-1*4 -27-0*4 -27-1*4 -27-2*4 -27-3*4
-      enemyNode.setPosition(-12 + i * 4, 0, -27 - Math.abs(i - 3) * 4);
+      enemyNode.setPosition(
+        -Const.boundary.x + i * 4,
+        0,
+        -27 - Math.abs(i - 3) * 4
+      );
       const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
       enemyPlaneComp.show(this, this.enemy1Speed, false);
     }
@@ -402,7 +406,7 @@ export class GameManager extends Component {
       speed = this.bulletPropMSpeed;
     }
     // propNode.setParent(this.node);
-    const x = math.randomRangeInt(-12, 13);
+    const x = math.randomRangeInt(-Const.boundary.x, Const.boundary.x + 1);
     propNode.setPosition(x, 0, -27);
     const bulletPropComp = propNode.getComponent(BulletProp);
     bulletPropComp.show(this, speed);

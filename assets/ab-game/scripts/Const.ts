@@ -31,4 +31,18 @@ export class Const {
     MIDDLE: 2,
     RIGHT: 3,
   };
+
+  public static boundary = {
+    // 左右（x轴）边界
+    x: 12,
+    // 上下（z轴）边界
+    z: 25,
+  };
+
+  public static outOfScreen = {
+    // 左右（x轴）
+    x: 20,
+    // 上下（z轴）
+    z: 40,
+  };
 }

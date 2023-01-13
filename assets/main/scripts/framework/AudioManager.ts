@@ -12,7 +12,12 @@ export class AudioManager extends Component {
 
   private _dict: IAudioClip = {};
 
+  private _bgmSource: AudioSource = null;
+
   private _audioSource: AudioSource = null;
+
+  // 停止音乐
+  private _stop = false;
 
   start() {
     for (let i = 0; i < this.audioList.length; i++) {
@@ -20,13 +25,29 @@ export class AudioManager extends Component {
       this._dict[audioClip.name] = audioClip;
     }
     this._audioSource = this.getComponent(AudioSource);
+    this._bgmSource = this.node.parent
+      .getChildByName("bgm")
+      .getComponent(AudioSource);
   }
 
   public play(name: string) {
     const audioClip = this._dict[name];
-    if (audioClip) {
+    if (audioClip && !this._stop) {
       this._audioSource.playOneShot(audioClip);
     }
+  }
+
+  public music() {
+    // 播放背景音乐
+    this._bgmSource.play();
+    this._stop = false;
+  }
+
+  // 静音
+  public stop() {
+    // 停止背景音乐
+    this._bgmSource.stop();
+    this._stop = true;
   }
 
   update(deltaTime: number) {}

@@ -1,9 +1,7 @@
 import { _decorator, Component, Collider, ITriggerEvent } from "cc";
-import { Const } from "../framework/Const";
-import { PoolManager } from "../framework/PoolManager";
+import { Const } from "../Const";
+import { PoolManager } from "../../../main/scripts/framework/PoolManager";
 const { ccclass } = _decorator;
-
-const OUT_RANGE = 30;
 
 @ccclass("bullet")
 export class bullet extends Component {
@@ -47,7 +45,7 @@ export class bullet extends Component {
     }
 
     // 超出屏幕销毁
-    if (Math.abs(moveZ) > OUT_RANGE) {
+    if (Math.abs(moveZ) > Const.outOfScreen.z) {
       // this.node.destroy();
       PoolManager.instance.putNode(this.node);
     }
