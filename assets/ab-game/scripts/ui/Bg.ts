@@ -1,5 +1,5 @@
-import { _decorator, Component, Node } from "cc";
-import { GameManager } from "../GameManager";
+import { _decorator, Component, Node, Prefab } from "cc";
+// import { GameManager } from "../GameManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("bg")
@@ -10,8 +10,8 @@ export class bg extends Component {
   @property(Node)
   public bg02: Node = null;
 
-  @property(GameManager)
-  public gameManager: GameManager = null;
+  // @property(Prefab)
+  // public gameManager: Prefab = null;
 
   _bgSpeed: number = 5;
 
