@@ -66,7 +66,10 @@
     "__prefab": {
       "__id__": 3
     },
-    "playerPlane": null,
+    "playerPlanePre": {
+      "__uuid__": "274fc8a4-15ee-4501-a46e-feaae9a1b3d5",
+      "__expectedType__": "cc.Prefab"
+    },
     "bullet01": {
       "__uuid__": "a1bc89b3-bdf7-4dd1-8232-409ca0cb61a2",
       "__expectedType__": "cc.Prefab"
@@ -117,13 +120,18 @@
     "bulletPropSSpeed": 0.1,
     "bulletPropHSpeed": 0.09,
     "bulletPropMSpeed": 0.08,
-    "gameScore": null,
-    "gameOverScore": null,
-    "gameStartPage": null,
-    "gameOverPage": null,
-    "gamePage": null,
-    "overAnim": null,
-    "audioEffect": null,
+    "gameOverPagePre": {
+      "__uuid__": "236be1ed-f7bd-4f83-afa9-16e0c9be13ef",
+      "__expectedType__": "cc.Prefab"
+    },
+    "gamePagePre": {
+      "__uuid__": "061f0029-40c8-47f8-a5e0-4103eb6ecfa8",
+      "__expectedType__": "cc.Prefab"
+    },
+    "audioManagerPre": {
+      "__uuid__": "cd3ced32-d70a-471d-802e-ac1297d46b4d",
+      "__expectedType__": "cc.Prefab"
+    },
     "enemyExplodePrefab": {
       "__uuid__": "cdc690dc-3f58-444c-a776-8dd19d2f982f",
       "__expectedType__": "cc.Prefab"

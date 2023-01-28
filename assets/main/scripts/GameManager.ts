@@ -21,7 +21,8 @@ const { ccclass, property } = _decorator;
 
 @ccclass("GameManager")
 export class GameManager extends Component {
-  @property(SelfPlane)
+  @property(Prefab)
+  public playerPlanePre: Prefab = null;
   public playerPlane: SelfPlane = null;
 
   @property(Prefab)
@@ -73,31 +74,28 @@ export class GameManager extends Component {
   // 游戏状态
   public isGameStart = false;
 
-  // 游戏分数
-  @property(Label)
-  public gameScore: Label = null;
-  @property(Label)
-  public gameOverScore: Label = null;
-
   // 游戏UI界面
-  @property(Node)
-  public gameStartPage: Node = null;
-  @property(Node)
-  public gameOverPage: Node = null;
-  @property(Node)
-  public gamePage: Node = null;
-
-  // 结束动画
-  @property(Animation)
-  public overAnim: Animation = null;
-
+  // @property(Node)
+  // public gameStartPage: Node = null;
+  @property(Prefab)
+  public gameOverPagePre: Prefab = null;
+  @property(Prefab)
+  public gamePagePre: Prefab = null;
   // 音效
-  @property(AudioManager)
-  public audioEffect: AudioManager = null;
+  @property(Prefab)
+  public audioManagerPre: Prefab = null;
 
   // 敌机爆炸特效
   @property(Prefab)
   public enemyExplodePrefab: Prefab = null;
+
+  // 游戏分数
+  private _gameScore: Label = null;
+  public _gameOverScore: Label = null;
+  // 结束动画
+  private _overAnim: Animation = null;
+  // 音效
+  private _audioManager: AudioManager = null;
 
   private _curShootTime = 0;
   private _curEnemyTime = 0;
@@ -108,9 +106,33 @@ export class GameManager extends Component {
   // 玩家得分
   private _score = 0;
 
-  // start() {
-  // this._init();
-  // }
+  start() {
+    // 游戏分数
+    this._gameScore = this.getNode(this.gamePagePre, this.node)
+      .getChildByName("score")
+      .getComponent(Label);
+
+    // 游戏结束分数
+    this._gameOverScore = this.getNode(this.gameOverPagePre, this.node)
+      .getChildByName("score")
+      .getComponent(Label);
+
+    // 游戏结束动画
+    this._overAnim = this.getNode(this.gameOverPagePre, this.node)
+      .getChildByName("game-over-title")
+      .getComponent(Animation);
+
+    // 音乐管理组件
+    this._audioManager = this.getNode(this.audioManagerPre, this.node)
+      .getChildByName("effect")
+      .getComponent(AudioManager);
+
+    // 玩家飞机脚本组件
+    this.playerPlane = this.getNode(
+      this.playerPlanePre,
+      this.node
+    ).getComponent(SelfPlane);
+  }
 
   update(deltaTime: number) {
     if (!this.isGameStart) {
@@ -185,10 +207,12 @@ export class GameManager extends Component {
     this.isGameStart = false;
 
     // 更新游戏界面
-    this.gamePage.active = false;
-    this.gameOverPage.active = true;
+    // this.gamePage.active = false;
+    this.getNode(this.gamePagePre, this.node).active = false;
+    // this.gameOverPage.active = true;
+    this.getNode(this.gameOverPagePre, this.node).active = true;
     // 播放结束动画
-    this.overAnim.play();
+    this._overAnim.play();
 
     // 取消调度器
     this.unschedule(this._changeMode);
@@ -209,10 +233,15 @@ export class GameManager extends Component {
     this._changeCombination();
   }
 
+  // 从对象池获取节点
+  public getNode(prefab: Prefab, parent: Node) {
+    return PoolManager.instance.getNode(prefab, parent);
+  }
+
   public addScore() {
     this._score++;
-    this.gameScore.string = this._score.toString();
-    this.gameOverScore.string = this._score.toString();
+    this._gameScore.string = this._score.toString();
+    this._gameOverScore.string = this._score.toString();
   }
 
   public isShooting(v: boolean) {
@@ -220,7 +249,7 @@ export class GameManager extends Component {
   }
 
   public playAudio(name: string) {
-    this.audioEffect.play(name);
+    this._audioManager.play(name);
   }
 
   // 更新组合状态
@@ -243,10 +272,7 @@ export class GameManager extends Component {
   public createBulletM() {
     // const bulletNode = instantiate(this.bullet01);
     // bulletNode.setParent(this.bulletManager);
-    const bulletNode = PoolManager.instance.getNode(
-      this.bullet01,
-      this.bulletManager
-    );
+    const bulletNode = this.getNode(this.bullet01, this.bulletManager);
     const pos = this.playerPlane.node.position;
     bulletNode.setPosition(pos.x, pos.y, pos.z - 2.5);
     const bulletComp = bulletNode.getComponent(bullet);
@@ -258,20 +284,14 @@ export class GameManager extends Component {
     // left
     // const bulletNodeLeft = instantiate(this.bullet03);
     // bulletNodeLeft.setParent(this.bulletManager);
-    const bulletNodeLeft = PoolManager.instance.getNode(
-      this.bullet03,
-      this.bulletManager
-    );
+    const bulletNodeLeft = this.getNode(this.bullet03, this.bulletManager);
     bulletNodeLeft.setPosition(pos.x - 1.2, pos.y, pos.z - 2.5);
     const bulletCompLeft = bulletNodeLeft.getComponent(bullet);
     bulletCompLeft.show(this.bulletSpeed, false);
     // right
     // const bulletNodeRight = instantiate(this.bullet03);
     // bulletNodeRight.setParent(this.bulletManager);
-    const bulletNodeRight = PoolManager.instance.getNode(
-      this.bullet03,
-      this.bulletManager
-    );
+    const bulletNodeRight = this.getNode(this.bullet03, this.bulletManager);
     bulletNodeRight.setPosition(pos.x + 1.2, pos.y, pos.z - 2.5);
     const bulletCompRight = bulletNodeRight.getComponent(bullet);
     bulletCompRight.show(this.bulletSpeed, false);
@@ -283,30 +303,21 @@ export class GameManager extends Component {
     // left
     // const bulletNodeLeft = instantiate(this.bullet05);
     // bulletNodeLeft.setParent(this.bulletManager);
-    const bulletNodeLeft = PoolManager.instance.getNode(
-      this.bullet05,
-      this.bulletManager
-    );
+    const bulletNodeLeft = this.getNode(this.bullet05, this.bulletManager);
     bulletNodeLeft.setPosition(pos.x - 1.2, pos.y, pos.z - 2.5);
     const bulletCompLeft = bulletNodeLeft.getComponent(bullet);
     bulletCompLeft.show(this.bulletSpeed, false, Const.direction.LEFT);
     // middle
     // const bulletNodeMiddle = instantiate(this.bullet05);
     // bulletNodeMiddle.setParent(this.bulletManager);
-    const bulletNodeMiddle = PoolManager.instance.getNode(
-      this.bullet05,
-      this.bulletManager
-    );
+    const bulletNodeMiddle = this.getNode(this.bullet05, this.bulletManager);
     bulletNodeMiddle.setPosition(pos.x, pos.y, pos.z - 2.5);
     const bulletCompMiddle = bulletNodeMiddle.getComponent(bullet);
     bulletCompMiddle.show(this.bulletSpeed, false);
     // right
     // const bulletNodeRight = instantiate(this.bullet05);
     // bulletNodeRight.setParent(this.bulletManager);
-    const bulletNodeRight = PoolManager.instance.getNode(
-      this.bullet05,
-      this.bulletManager
-    );
+    const bulletNodeRight = this.getNode(this.bullet05, this.bulletManager);
     bulletNodeRight.setPosition(pos.x + 1.2, pos.y, pos.z - 2.5);
     const bulletCompRight = bulletNodeRight.getComponent(bullet);
     bulletCompRight.show(this.bulletSpeed, false, Const.direction.RIGHT);
@@ -317,10 +328,7 @@ export class GameManager extends Component {
     // console.log("enemyPos :>> ", enemyPos);
     // const bulletNode = instantiate(this.bullet02);
     // bulletNode.setParent(this.bulletManager);
-    const bulletNode = PoolManager.instance.getNode(
-      this.bullet02,
-      this.bulletManager
-    );
+    const bulletNode = this.getNode(this.bullet02, this.bulletManager);
     bulletNode.setPosition(enemyPos.x, enemyPos.y, enemyPos.z + 2);
     const bulletComp = bulletNode.getComponent(bullet);
     bulletComp.show(this.enemyBulletSpeed, true);
@@ -340,11 +348,11 @@ export class GameManager extends Component {
     let speed = 0;
     if (whichEnemy === Const.enemyType.TYPE1) {
       // enemyNode = instantiate(this.enemy01);
-      enemyNode = PoolManager.instance.getNode(this.enemy01, this.node);
+      enemyNode = this.getNode(this.enemy01, this.node);
       speed = this.enemy1Speed;
     } else {
       // enemyNode = instantiate(this.enemy02);
-      enemyNode = PoolManager.instance.getNode(this.enemy02, this.node);
+      enemyNode = this.getNode(this.enemy02, this.node);
       speed = this.enemy2Speed;
     }
     // enemyNode.setParent(this.node);
@@ -360,7 +368,7 @@ export class GameManager extends Component {
     for (let i = 0; i < enemyArr.length; i++) {
       // const enemyNode = instantiate(this.enemy02);
       // enemyNode.setParent(this.node);
-      const enemyNode = PoolManager.instance.getNode(this.enemy02, this.node);
+      const enemyNode = this.getNode(this.enemy02, this.node);
       enemyNode.setPosition(-Const.boundary.x + i * 6, 0, -27);
       const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
       enemyPlaneComp.show(this, this.enemy1Speed, false);
@@ -373,7 +381,7 @@ export class GameManager extends Component {
     for (let i = 0; i < enemyArr.length; i++) {
       // const enemyNode = instantiate(this.enemy01);
       // enemyNode.setParent(this.node);
-      const enemyNode = PoolManager.instance.getNode(this.enemy01, this.node);
+      const enemyNode = this.getNode(this.enemy01, this.node);
       // 0 1 2 3 4 5 6
       // -27-3*4 -27-2*4 -27-1*4 -27-0*4 -27-1*4 -27-2*4 -27-3*4
       enemyNode.setPosition(
@@ -394,15 +402,15 @@ export class GameManager extends Component {
     let speed = 0;
     if (whichProp === Const.propType.H) {
       // propNode = instantiate(this.bulletPropH);
-      propNode = PoolManager.instance.getNode(this.bulletPropH, this.node);
+      propNode = this.getNode(this.bulletPropH, this.node);
       speed = this.bulletPropHSpeed;
     } else if (whichProp === Const.propType.S) {
       // propNode = instantiate(this.bulletPropS);
-      propNode = PoolManager.instance.getNode(this.bulletPropS, this.node);
+      propNode = this.getNode(this.bulletPropS, this.node);
       speed = this.bulletPropSSpeed;
     } else {
       // propNode = instantiate(this.bulletPropM);
-      propNode = PoolManager.instance.getNode(this.bulletPropM, this.node);
+      propNode = this.getNode(this.bulletPropM, this.node);
       speed = this.bulletPropMSpeed;
     }
     // propNode.setParent(this.node);
@@ -414,10 +422,7 @@ export class GameManager extends Component {
 
   // 生成敌机爆炸💥特效
   public createEnemyExplode(pos: Vec3) {
-    const enemyExplode = PoolManager.instance.getNode(
-      this.enemyExplodePrefab,
-      this.node
-    );
+    const enemyExplode = this.getNode(this.enemyExplodePrefab, this.node);
     enemyExplode.setPosition(pos);
   }
 

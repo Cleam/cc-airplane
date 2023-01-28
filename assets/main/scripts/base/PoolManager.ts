@@ -23,7 +23,7 @@ export class PoolManager {
     return this._instance;
   }
 
-  // 存入节点
+  // 存入/回收节点
   public putNode(node: Node) {
     const name = node.name;
     // console.log("putNode name :>> ", name);
