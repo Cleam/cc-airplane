@@ -4,73 +4,48 @@ import {
   Node,
   Input,
   EventTouch,
-  AudioSource,
   log,
   Prefab,
+  find,
 } from "cc";
-import { GameManager } from "../GameManager";
 import { Const } from "../base/Const";
 import { AudioManager } from "../base/AudioManager";
-import { PoolManager } from "../base/PoolManager";
+import { Global } from "../Global";
+import { GameManager } from "../GameManager";
 
 const { ccclass, property } = _decorator;
 
 @ccclass("UIManager")
 export class UIManager extends Component {
-  @property
   public planeSpeed: number = 4;
 
-  @property(Prefab)
-  public gameManagerPre: Prefab = null;
   private _gameManager: GameManager = null;
 
-  @property(Prefab)
-  public gameStartPagePre: Prefab = null;
-  private _gameStartPage: Node = null;
-  @property(Prefab)
-  public gamePagePre: Prefab = null;
-  private _gamePage: Node = null;
-  @property(Prefab)
-  public gameOverPagePre: Prefab = null;
-  private _gameOverPage: Node = null;
-  @property(Prefab)
-  public volumePre: Prefab = null;
+  // private _gameStartPage: Node = null;
+  // private _gamePage: Node = null;
+  // private _gameOverPage: Node = null;
+  // private _volumeWrap: Node = null;
   private _volume: Node = null;
+  private _mute: Node = null;
 
-  // 音效
-  @property(Prefab)
-  public audioManagerPre: Prefab = null;
   // 音效
   private _audioManager: AudioManager = null;
 
-  // private _bgmSource: AudioSource = null;
-
   private _initNode() {
-    const gn = PoolManager.instance.getNode;
-    this._gameManager = PoolManager.instance
-      .getNode(this.gameManagerPre, this.node)
-      .getComponent(GameManager);
-
-    this._gameStartPage = gn(this.gameStartPagePre, this.node);
-    this._gamePage = gn(this.gamePagePre, this.node);
-    this._volume = gn(this.volumePre, this.node);
-    this._gamePage = gn(this.gamePagePre, this.node);
-
-    // 音乐管理组件
-    this._audioManager = gn(this.audioManagerPre, this.node)
-      .getChildByName("effect")
-      .getComponent(AudioManager);
+    this._gameManager = Global.gameManager.getComponent(GameManager);
+    this._volume = Global.volumeWrap.getChildByName("volume");
+    this._mute = Global.volumeWrap.getChildByName("mute");
   }
 
   start() {
-    log("canvas started!!!");
+    log("【 UIManager start 】");
     this._initNode();
 
     this.node.on(Input.EventType.TOUCH_START, this._touchStart, this);
     this.node.on(Input.EventType.TOUCH_MOVE, this._touchMove, this);
     this.node.on(Input.EventType.TOUCH_END, this._touchEnd, this);
     // 开始界面
-    this._gameStartPage.active = true;
+    Global.gameStartPage.active = true;
   }
 
   update(deltaTime: number) {}
@@ -78,32 +53,32 @@ export class UIManager extends Component {
   // 再来一局
   public restart() {
     this._gameManager.playAudio("button");
-    this._gamePage.active = true;
-    this._gameOverPage.active = false;
+    Global.gamePage.active = true;
+    Global.gameOverPage.active = false;
     this._gameManager.gameStart();
   }
 
   // 返回主页
   public returnMain() {
     this._gameManager.playAudio("button");
-    this._gameStartPage.active = true;
-    this._gameOverPage.active = false;
-    this._gameManager.playerPlane.resetPos();
+    Global.gameStartPage.active = true;
+    Global.gameOverPage.active = false;
+    Global.selfPlane.resetPos();
   }
 
   private _touchStart() {
-    if (this._gamePage.active) {
-      this._gameManager?.isShooting(true);
-    } else if (this._gameStartPage.active) {
+    if (Global.gamePage.active) {
+      this._gameManager.isShooting(true);
+    } else if (Global.gameStartPage.active) {
       this._gameManager.playAudio("button");
-      this._gameStartPage.active = false;
-      this._gamePage.active = true;
+      Global.gameStartPage.active = false;
+      Global.gamePage.active = true;
       this._gameManager.gameStart();
     }
   }
 
   private _touchEnd() {
-    if (!this._gamePage.active) {
+    if (!Global.gamePage.active) {
       return;
     }
 
@@ -111,12 +86,12 @@ export class UIManager extends Component {
   }
 
   private _touchMove(event: EventTouch) {
-    if (!this._gamePage.active) {
+    if (!Global.gamePage.active) {
       return;
     }
 
     const delta = event.getDelta();
-    let { x, y, z } = this._gameManager.playerPlane.node.position;
+    let { x, y, z } = Global.selfPlane.node.position;
     x = x + delta.x * this.planeSpeed * 0.01;
     z = z - delta.y * this.planeSpeed * 0.01;
     if (x < -Const.boundary.x) {
@@ -124,7 +99,7 @@ export class UIManager extends Component {
     } else if (x > Const.boundary.x) {
       x = Const.boundary.x;
     }
-    this._gameManager.playerPlane.node.setPosition(x, y, z);
+    Global.selfPlane.node.setPosition(x, y, z);
   }
 
   // 播放声音

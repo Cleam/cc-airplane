@@ -25,13 +25,10 @@
       },
       {
         "__id__": 4
-      },
-      {
-        "__id__": 6
       }
     ],
     "_prefab": {
-      "__id__": 8
+      "__id__": 6
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -122,46 +119,6 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "b8/yFpyWVGjZyiCud/5qsc"
-  },
-  {
-    "__type__": "c6ceaP7u9JF37SFaumQfnlq",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 7
-    },
-    "planeSpeed": 4,
-    "gameManagerPre": {
-      "__uuid__": "33f30f85-1392-4e19-a56a-630d6fb12a10",
-      "__expectedType__": "cc.Prefab"
-    },
-    "gameStartPagePre": {
-      "__uuid__": "b7a26a84-6b0a-46e7-901a-9e4c7c453733",
-      "__expectedType__": "cc.Prefab"
-    },
-    "gamePagePre": {
-      "__uuid__": "061f0029-40c8-47f8-a5e0-4103eb6ecfa8",
-      "__expectedType__": "cc.Prefab"
-    },
-    "gameOverPagePre": {
-      "__uuid__": "236be1ed-f7bd-4f83-afa9-16e0c9be13ef",
-      "__expectedType__": "cc.Prefab"
-    },
-    "volumePre": {
-      "__uuid__": "5f1347e5-6f6a-4eca-84fc-164579b3c96f",
-      "__expectedType__": "cc.Prefab"
-    },
-    "mutePre": null,
-    "audioManagerPre": null,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "40W/ITLOpJ766mQydVtaWC"
   },
   {
     "__type__": "cc.PrefabInfo",
