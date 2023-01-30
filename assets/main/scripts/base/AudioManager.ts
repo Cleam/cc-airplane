@@ -24,10 +24,10 @@ export class AudioManager extends Component {
       const audioClip = this.audioList[i];
       this._dict[audioClip.name] = audioClip;
     }
-    this._audioSource = this.getComponent(AudioSource);
     this._bgmSource = this.node.parent
       .getChildByName("bgm")
       .getComponent(AudioSource);
+    this._audioSource = this.getComponent(AudioSource);
   }
 
   public play(name: string) {

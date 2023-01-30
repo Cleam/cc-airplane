@@ -66,17 +66,17 @@ export class GameManager extends Component {
   start() {
     log("【 GameManager start 】");
     // 游戏分数
-    this._gameScore = Global.gamePage
+    this._gameScore = Global.instance.gamePage
       .getChildByPath("score-wrap/score")
       .getComponent(Label);
 
     // 游戏结束分数
-    this._gameOverScore = Global.gameOverPage
+    this._gameOverScore = Global.instance.gameOverPage
       .getChildByPath("score-wrap/score")
       .getComponent(Label);
 
     // 游戏结束动画
-    this._overAnim = Global.gameOverPage
+    this._overAnim = Global.instance.gameOverPage
       .getChildByName("game-over-title")
       .getComponent(Animation);
   }
@@ -86,7 +86,7 @@ export class GameManager extends Component {
       return;
     }
 
-    if (Global.selfPlane.isDead) {
+    if (Global.instance.selfPlane.isDead) {
       this.gameOver();
       return;
     }
@@ -145,7 +145,7 @@ export class GameManager extends Component {
   public gameStart() {
     this.isGameStart = true;
     this._init();
-    Global.selfPlane.init();
+    Global.instance.selfPlane.init();
   }
 
   // 游戏结束
@@ -154,8 +154,8 @@ export class GameManager extends Component {
     this.isGameStart = false;
 
     // 更新游戏界面
-    Global.gamePage.active = false;
-    Global.gameOverPage.active = true;
+    Global.instance.gamePage.active = false;
+    Global.instance.gameOverPage.active = true;
     // 播放结束动画
     this._overAnim.play();
 
@@ -194,7 +194,7 @@ export class GameManager extends Component {
   }
 
   public playAudio(name: string) {
-    Global.audioManager.play(name);
+    Global.instance.audioManager.play(name);
   }
 
   // 更新组合状态
@@ -215,28 +215,37 @@ export class GameManager extends Component {
 
   // 生成玩家子弹（单排）
   public createBulletM() {
-    // const bulletNode = instantiate(Global.bullet01);
-    // bulletNode.setParent(Global.bulletManager);
-    const bulletNode = this.getNode(Global.bullet01, Global.bulletManager);
-    const pos = Global.selfPlane.node.position;
+    // const bulletNode = instantiate(Global.instance.bullet01);
+    // bulletNode.setParent(Global.instance.bulletManager);
+    const bulletNode = this.getNode(
+      Global.instance.bullet01,
+      Global.instance.bulletManager
+    );
+    const pos = Global.instance.selfPlane.node.position;
     bulletNode.setPosition(pos.x, pos.y, pos.z - 2.5);
     const bulletComp = bulletNode.getComponent(bullet);
     bulletComp.show(this.bulletSpeed, false);
   }
   // 生成玩家子弹（双排 并排发射）
   public createBulletH() {
-    const pos = Global.selfPlane.node.position;
+    const pos = Global.instance.selfPlane.node.position;
     // left
-    // const bulletNodeLeft = instantiate(Global.bullet03);
-    // bulletNodeLeft.setParent(Global.bulletManager);
-    const bulletNodeLeft = this.getNode(Global.bullet03, Global.bulletManager);
+    // const bulletNodeLeft = instantiate(Global.instance.bullet03);
+    // bulletNodeLeft.setParent(Global.instance.bulletManager);
+    const bulletNodeLeft = this.getNode(
+      Global.instance.bullet03,
+      Global.instance.bulletManager
+    );
     bulletNodeLeft.setPosition(pos.x - 1.2, pos.y, pos.z - 2.5);
     const bulletCompLeft = bulletNodeLeft.getComponent(bullet);
     bulletCompLeft.show(this.bulletSpeed, false);
     // right
-    // const bulletNodeRight = instantiate(Global.bullet03);
-    // bulletNodeRight.setParent(Global.bulletManager);
-    const bulletNodeRight = this.getNode(Global.bullet03, Global.bulletManager);
+    // const bulletNodeRight = instantiate(Global.instance.bullet03);
+    // bulletNodeRight.setParent(Global.instance.bulletManager);
+    const bulletNodeRight = this.getNode(
+      Global.instance.bullet03,
+      Global.instance.bulletManager
+    );
     bulletNodeRight.setPosition(pos.x + 1.2, pos.y, pos.z - 2.5);
     const bulletCompRight = bulletNodeRight.getComponent(bullet);
     bulletCompRight.show(this.bulletSpeed, false);
@@ -244,28 +253,34 @@ export class GameManager extends Component {
 
   // 生成玩家子弹（三排且发散发射）
   public createBulletS() {
-    const pos = Global.selfPlane.node.position;
+    const pos = Global.instance.selfPlane.node.position;
     // left
-    // const bulletNodeLeft = instantiate(Global.bullet05);
-    // bulletNodeLeft.setParent(Global.bulletManager);
-    const bulletNodeLeft = this.getNode(Global.bullet05, Global.bulletManager);
+    // const bulletNodeLeft = instantiate(Global.instance.bullet05);
+    // bulletNodeLeft.setParent(Global.instance.bulletManager);
+    const bulletNodeLeft = this.getNode(
+      Global.instance.bullet05,
+      Global.instance.bulletManager
+    );
     bulletNodeLeft.setPosition(pos.x - 1.2, pos.y, pos.z - 2.5);
     const bulletCompLeft = bulletNodeLeft.getComponent(bullet);
     bulletCompLeft.show(this.bulletSpeed, false, Const.direction.LEFT);
     // middle
-    // const bulletNodeMiddle = instantiate(Global.bullet05);
-    // bulletNodeMiddle.setParent(Global.bulletManager);
+    // const bulletNodeMiddle = instantiate(Global.instance.bullet05);
+    // bulletNodeMiddle.setParent(Global.instance.bulletManager);
     const bulletNodeMiddle = this.getNode(
-      Global.bullet05,
-      Global.bulletManager
+      Global.instance.bullet05,
+      Global.instance.bulletManager
     );
     bulletNodeMiddle.setPosition(pos.x, pos.y, pos.z - 2.5);
     const bulletCompMiddle = bulletNodeMiddle.getComponent(bullet);
     bulletCompMiddle.show(this.bulletSpeed, false);
     // right
-    // const bulletNodeRight = instantiate(Global.bullet05);
-    // bulletNodeRight.setParent(Global.bulletManager);
-    const bulletNodeRight = this.getNode(Global.bullet05, Global.bulletManager);
+    // const bulletNodeRight = instantiate(Global.instance.bullet05);
+    // bulletNodeRight.setParent(Global.instance.bulletManager);
+    const bulletNodeRight = this.getNode(
+      Global.instance.bullet05,
+      Global.instance.bulletManager
+    );
     bulletNodeRight.setPosition(pos.x + 1.2, pos.y, pos.z - 2.5);
     const bulletCompRight = bulletNodeRight.getComponent(bullet);
     bulletCompRight.show(this.bulletSpeed, false, Const.direction.RIGHT);
@@ -274,9 +289,12 @@ export class GameManager extends Component {
   // 生成敌机子弹
   public createEnemyBullet(enemyPos: Vec3) {
     // console.log("enemyPos :>> ", enemyPos);
-    // const bulletNode = instantiate(Global.bullet02);
-    // bulletNode.setParent(Global.bulletManager);
-    const bulletNode = this.getNode(Global.bullet02, Global.bulletManager);
+    // const bulletNode = instantiate(Global.instance.bullet02);
+    // bulletNode.setParent(Global.instance.bulletManager);
+    const bulletNode = this.getNode(
+      Global.instance.bullet02,
+      Global.instance.bulletManager
+    );
     bulletNode.setPosition(enemyPos.x, enemyPos.y, enemyPos.z + 2);
     const bulletComp = bulletNode.getComponent(bullet);
     bulletComp.show(this.enemyBulletSpeed, true);
@@ -295,12 +313,12 @@ export class GameManager extends Component {
     let enemyNode: Node | null = null;
     let speed = 0;
     if (whichEnemy === Const.enemyType.TYPE1) {
-      // enemyNode = instantiate(Global.enemy01);
-      enemyNode = this.getNode(Global.enemy01, this.node);
+      // enemyNode = instantiate(Global.instance.enemy01);
+      enemyNode = this.getNode(Global.instance.enemy01, this.node);
       speed = this.enemy1Speed;
     } else {
-      // enemyNode = instantiate(Global.enemy02);
-      enemyNode = this.getNode(Global.enemy02, this.node);
+      // enemyNode = instantiate(Global.instance.enemy02);
+      enemyNode = this.getNode(Global.instance.enemy02, this.node);
       speed = this.enemy2Speed;
     }
     // enemyNode.setParent(this.node);
@@ -314,9 +332,9 @@ export class GameManager extends Component {
   public createCombination1() {
     const enemyArr = new Array<Node>(5);
     for (let i = 0; i < enemyArr.length; i++) {
-      // const enemyNode = instantiate(Global.enemy02);
+      // const enemyNode = instantiate(Global.instance.enemy02);
       // enemyNode.setParent(this.node);
-      const enemyNode = this.getNode(Global.enemy02, this.node);
+      const enemyNode = this.getNode(Global.instance.enemy02, this.node);
       enemyNode.setPosition(-Const.boundary.x + i * 6, 0, -27);
       const enemyPlaneComp = enemyNode.getComponent(EnemyPlane);
       enemyPlaneComp.show(this, this.enemy1Speed, false);
@@ -327,9 +345,9 @@ export class GameManager extends Component {
   public createCombination2() {
     const enemyArr = new Array<Node>(7);
     for (let i = 0; i < enemyArr.length; i++) {
-      // const enemyNode = instantiate(Global.enemy01);
+      // const enemyNode = instantiate(Global.instance.enemy01);
       // enemyNode.setParent(this.node);
-      const enemyNode = this.getNode(Global.enemy01, this.node);
+      const enemyNode = this.getNode(Global.instance.enemy01, this.node);
       // 0 1 2 3 4 5 6
       // -27-3*4 -27-2*4 -27-1*4 -27-0*4 -27-1*4 -27-2*4 -27-3*4
       enemyNode.setPosition(
@@ -349,16 +367,16 @@ export class GameManager extends Component {
     let propNode: Node | null = null;
     let speed = 0;
     if (whichProp === Const.propType.H) {
-      // propNode = instantiate(Global.bulletPropH);
-      propNode = this.getNode(Global.bulletPropH, this.node);
+      // propNode = instantiate(Global.instance.bulletPropH);
+      propNode = this.getNode(Global.instance.bulletPropH, this.node);
       speed = this.bulletPropHSpeed;
     } else if (whichProp === Const.propType.S) {
-      // propNode = instantiate(Global.bulletPropS);
-      propNode = this.getNode(Global.bulletPropS, this.node);
+      // propNode = instantiate(Global.instance.bulletPropS);
+      propNode = this.getNode(Global.instance.bulletPropS, this.node);
       speed = this.bulletPropSSpeed;
     } else {
-      // propNode = instantiate(Global.bulletPropM);
-      propNode = this.getNode(Global.bulletPropM, this.node);
+      // propNode = instantiate(Global.instance.bulletPropM);
+      propNode = this.getNode(Global.instance.bulletPropM, this.node);
       speed = this.bulletPropMSpeed;
     }
     // propNode.setParent(this.node);
@@ -370,7 +388,10 @@ export class GameManager extends Component {
 
   // 生成敌机爆炸💥特效
   public createEnemyExplode(pos: Vec3) {
-    const enemyExplode = this.getNode(Global.enemyExplodePrefab, this.node);
+    const enemyExplode = this.getNode(
+      Global.instance.enemyExplodePrefab,
+      this.node
+    );
     enemyExplode.setPosition(pos);
   }
 
@@ -385,7 +406,7 @@ export class GameManager extends Component {
     //   children[i].destroy();
     // }
 
-    // children = Global.bulletManager.children;
+    // children = Global.instance.bulletManager.children;
     // len = children.length;
     // for (let i = len - 1; i > 0; i--) {
     //   children[i].destroy();
@@ -394,6 +415,6 @@ export class GameManager extends Component {
     // 清空飞机和道具
     this.node.destroyAllChildren();
     // 清空子弹
-    Global.bulletManager.destroyAllChildren();
+    Global.instance.bulletManager.destroyAllChildren();
   }
 }

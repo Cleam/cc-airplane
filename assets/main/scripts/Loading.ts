@@ -47,11 +47,11 @@ export class Loading extends Component {
         "prefab/d3/self-plane",
         "prefab/d3/bullet-manager",
         // ui
-        "prefab/ui/audio-manager",
-        "prefab/ui/volume-wrap",
-        "prefab/ui/game-start",
-        "prefab/ui/game",
-        "prefab/ui/game-over",
+        // "prefab/ui/audio-manager",
+        // "prefab/ui/volume-wrap",
+        // "prefab/ui/game-start",
+        // "prefab/ui/game",
+        // "prefab/ui/game-over",
         "prefab/ui/game-manager",
         "prefab/ui/ui-manager",
         // npc
@@ -78,7 +78,7 @@ export class Loading extends Component {
         this.progressLabel.string = Math.floor(p * 100) + "%";
         if (p >= 1) {
           // this.test.addComponent(Test);
-          Global.init();
+          Global.instance.init();
           this.node.destroy();
         }
       };
@@ -101,7 +101,7 @@ export class Loading extends Component {
             } else if (p.startsWith("prefab/ui")) {
               this._canvas.addChild(instantiate(data));
             } else {
-              Global.setPrefab(data);
+              Global.instance.setPrefab(data);
             }
             progress();
           }

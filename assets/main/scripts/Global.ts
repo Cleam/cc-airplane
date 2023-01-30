@@ -1,12 +1,4 @@
-import {
-  _decorator,
-  Component,
-  Node,
-  find,
-  Game,
-  Prefab,
-  assetManager,
-} from "cc";
+import { _decorator, Node, find, Prefab } from "cc";
 import { AudioManager } from "./base/AudioManager";
 import { GameManager } from "./GameManager";
 import { SelfPlane } from "./npc/SelfPlane";
@@ -24,92 +16,92 @@ export class Global {
   }
 
   // 子弹
-  public static bullet01: Prefab = null;
-  public static bullet02: Prefab = null;
-  public static bullet03: Prefab = null;
-  public static bullet04: Prefab = null;
-  public static bullet05: Prefab = null;
+  public bullet01: Prefab = null;
+  public bullet02: Prefab = null;
+  public bullet03: Prefab = null;
+  public bullet04: Prefab = null;
+  public bullet05: Prefab = null;
 
   // 敌机
-  public static enemy01: Prefab = null; // plane02
-  public static enemy02: Prefab = null; // plane03
+  public enemy01: Prefab = null; // plane02
+  public enemy02: Prefab = null; // plane03
 
   // 道具
-  public static bulletPropS: Prefab = null;
-  public static bulletPropH: Prefab = null;
-  public static bulletPropM: Prefab = null;
+  public bulletPropS: Prefab = null;
+  public bulletPropH: Prefab = null;
+  public bulletPropM: Prefab = null;
 
   // 敌机爆炸特效
-  public static enemyExplodePrefab: Prefab = null;
+  public enemyExplodePrefab: Prefab = null;
 
-  public static gameManager: Node = null;
-  public static uiManager: Node = null;
-  public static audioManager: AudioManager = null;
-  public static volumeWrap: Node = null;
-  public static gamePage: Node = null;
-  public static gameStartPage: Node = null;
-  public static gameOverPage: Node = null;
+  public gameManager: Node = null;
+  public uiManager: Node = null;
+  public audioManager: AudioManager = null;
+  public volumeWrap: Node = null;
+  public gamePage: Node = null;
+  public gameStartPage: Node = null;
+  public gameOverPage: Node = null;
 
-  public static selfPlane: SelfPlane = null;
-  public static bulletManager: Node = null;
+  public selfPlane: SelfPlane = null;
+  public bulletManager: Node = null;
 
-  public static init() {
+  public init() {
     this.selfPlane = find("self-plane").getComponent(SelfPlane);
     this.bulletManager = find("bullet-manager");
 
     const uiRoot = find("Canvas");
     // const ch = uiRoot.children;
     // console.log("ch :>> ", ch);
-    this.audioManager = find("audio-manager", uiRoot)
-      .getChildByName("effect")
-      .getComponent(AudioManager);
-    this.volumeWrap = find("volume-wrap", uiRoot);
-    this.gamePage = find("game", uiRoot);
-    this.gameStartPage = find("game-start", uiRoot);
-    this.gameOverPage = find("game-over", uiRoot);
     this.gameManager = find("game-manager", uiRoot);
     this.uiManager = find("ui-manager", uiRoot);
+    this.audioManager = find("audio-manager", this.uiManager)
+      .getChildByName("effect")
+      .getComponent(AudioManager);
+    this.volumeWrap = find("volume-wrap", this.uiManager);
+    this.gamePage = find("game", this.uiManager);
+    this.gameStartPage = find("game-start", this.uiManager);
+    this.gameOverPage = find("game-over", this.uiManager);
 
     // 添加脚本组件
     this.gameManager.addComponent(GameManager);
     this.uiManager.addComponent(UIManager);
   }
 
-  public static setPrefab(data: Prefab) {
+  public setPrefab(data: Prefab) {
     // console.log("88888888 data.name :>> ", data.name);
     switch (data.name) {
       case "bullet01":
-        Global.bullet01 = data;
+        this.bullet01 = data;
         break;
       case "bullet02":
-        Global.bullet02 = data;
+        this.bullet02 = data;
         break;
       case "bullet03":
-        Global.bullet03 = data;
+        this.bullet03 = data;
         break;
       case "bullet04":
-        Global.bullet04 = data;
+        this.bullet04 = data;
         break;
       case "bullet05":
-        Global.bullet05 = data;
+        this.bullet05 = data;
         break;
       case "bulletPropH":
-        Global.bulletPropH = data;
+        this.bulletPropH = data;
         break;
       case "bulletPropM":
-        Global.bulletPropM = data;
+        this.bulletPropM = data;
         break;
       case "bulletPropS":
-        Global.bulletPropS = data;
+        this.bulletPropS = data;
         break;
       case "plane02":
-        Global.enemy01 = data;
+        this.enemy01 = data;
         break;
       case "plane03":
-        Global.enemy02 = data;
+        this.enemy02 = data;
         break;
       case "explodeSmall":
-        Global.enemyExplodePrefab = data;
+        this.enemyExplodePrefab = data;
         break;
 
       default:
