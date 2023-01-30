@@ -3,8 +3,8 @@ import { Const } from "../base/Const";
 import { PoolManager } from "../base/PoolManager";
 const { ccclass } = _decorator;
 
-@ccclass("bullet")
-export class bullet extends Component {
+@ccclass("Bullet")
+export class Bullet extends Component {
   private _bulletSpeed = 1;
   private _isEnemyBullet = false;
   // 子弹方向
@@ -28,7 +28,6 @@ export class bullet extends Component {
   update(deltaTime: number) {
     const { x, y, z } = this.node.position;
     let moveZ = z;
-
     if (this._isEnemyBullet) {
       moveZ = z + this._bulletSpeed;
       this.node.setPosition(x, y, moveZ);

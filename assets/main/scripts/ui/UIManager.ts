@@ -7,17 +7,13 @@ const { ccclass, property } = _decorator;
 
 @ccclass("UIManager")
 export class UIManager extends Component {
-  public planeSpeed: number = 4;
+  public planeSpeed: number = 8;
 
   private _gameManager: GameManager = null;
 
-  private _initNode() {
-    this._gameManager = Global.instance.gameManager.getComponent(GameManager);
-  }
-
   start() {
     log("【 UIManager start 】");
-    this._initNode();
+    this._gameManager = Global.instance.gameManager.getComponent(GameManager);
 
     this.node.on(Input.EventType.TOUCH_START, this._touchStart, this);
     this.node.on(Input.EventType.TOUCH_MOVE, this._touchMove, this);
@@ -44,7 +40,7 @@ export class UIManager extends Component {
       return;
     }
 
-    this._gameManager?.isShooting(false);
+    this._gameManager.isShooting(false);
   }
 
   private _touchMove(event: EventTouch) {

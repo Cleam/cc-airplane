@@ -12,7 +12,7 @@ import {
   find,
   log,
 } from "cc";
-import { bullet } from "./npc/Bullet";
+import { Bullet } from "./npc/Bullet";
 import { BulletProp } from "./npc/BulletProp";
 import { EnemyPlane } from "./npc/EnemyPlane";
 import { Const } from "./base/Const";
@@ -22,28 +22,19 @@ const { ccclass, property } = _decorator;
 
 @ccclass("GameManager")
 export class GameManager extends Component {
-  @property
-  public shootTime = 0.1;
-  @property
+  public shootTime = 0.15;
   public bulletSpeed = 1;
 
   // 敌机
-  @property
-  public enemyTime = 3;
-  @property
+  public enemyTime = 1;
   public enemy1Speed = 0.3;
-  @property
   public enemy2Speed = 0.5;
-  @property
   public enemyBulletSpeed = 0.6;
 
   // 道具
-  @property
-  public bulletPropSSpeed = 0.13;
-  @property
-  public bulletPropHSpeed = 0.12;
-  @property
-  public bulletPropMSpeed = 0.1;
+  public bulletPropSSpeed = 0.1;
+  public bulletPropHSpeed = 0.09;
+  public bulletPropMSpeed = 0.08;
 
   // 游戏状态
   public isGameStart = false;
@@ -221,9 +212,10 @@ export class GameManager extends Component {
       Global.instance.bullet01,
       Global.instance.bulletManager
     );
+    debugger;
     const pos = Global.instance.selfPlane.node.position;
     bulletNode.setPosition(pos.x, pos.y, pos.z - 2.5);
-    const bulletComp = bulletNode.getComponent(bullet);
+    const bulletComp = bulletNode.getComponent(Bullet);
     bulletComp.show(this.bulletSpeed, false);
   }
   // 生成玩家子弹（双排 并排发射）
@@ -237,7 +229,7 @@ export class GameManager extends Component {
       Global.instance.bulletManager
     );
     bulletNodeLeft.setPosition(pos.x - 1.2, pos.y, pos.z - 2.5);
-    const bulletCompLeft = bulletNodeLeft.getComponent(bullet);
+    const bulletCompLeft = bulletNodeLeft.getComponent(Bullet);
     bulletCompLeft.show(this.bulletSpeed, false);
     // right
     // const bulletNodeRight = instantiate(Global.instance.bullet03);
@@ -247,7 +239,7 @@ export class GameManager extends Component {
       Global.instance.bulletManager
     );
     bulletNodeRight.setPosition(pos.x + 1.2, pos.y, pos.z - 2.5);
-    const bulletCompRight = bulletNodeRight.getComponent(bullet);
+    const bulletCompRight = bulletNodeRight.getComponent(Bullet);
     bulletCompRight.show(this.bulletSpeed, false);
   }
 
@@ -262,7 +254,7 @@ export class GameManager extends Component {
       Global.instance.bulletManager
     );
     bulletNodeLeft.setPosition(pos.x - 1.2, pos.y, pos.z - 2.5);
-    const bulletCompLeft = bulletNodeLeft.getComponent(bullet);
+    const bulletCompLeft = bulletNodeLeft.getComponent(Bullet);
     bulletCompLeft.show(this.bulletSpeed, false, Const.direction.LEFT);
     // middle
     // const bulletNodeMiddle = instantiate(Global.instance.bullet05);
@@ -272,7 +264,7 @@ export class GameManager extends Component {
       Global.instance.bulletManager
     );
     bulletNodeMiddle.setPosition(pos.x, pos.y, pos.z - 2.5);
-    const bulletCompMiddle = bulletNodeMiddle.getComponent(bullet);
+    const bulletCompMiddle = bulletNodeMiddle.getComponent(Bullet);
     bulletCompMiddle.show(this.bulletSpeed, false);
     // right
     // const bulletNodeRight = instantiate(Global.instance.bullet05);
@@ -282,7 +274,7 @@ export class GameManager extends Component {
       Global.instance.bulletManager
     );
     bulletNodeRight.setPosition(pos.x + 1.2, pos.y, pos.z - 2.5);
-    const bulletCompRight = bulletNodeRight.getComponent(bullet);
+    const bulletCompRight = bulletNodeRight.getComponent(Bullet);
     bulletCompRight.show(this.bulletSpeed, false, Const.direction.RIGHT);
   }
 
@@ -296,7 +288,7 @@ export class GameManager extends Component {
       Global.instance.bulletManager
     );
     bulletNode.setPosition(enemyPos.x, enemyPos.y, enemyPos.z + 2);
-    const bulletComp = bulletNode.getComponent(bullet);
+    const bulletComp = bulletNode.getComponent(Bullet);
     bulletComp.show(this.enemyBulletSpeed, true);
 
     const bulletCollider = bulletNode.getComponent(BoxCollider);
