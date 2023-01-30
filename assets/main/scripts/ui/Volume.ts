@@ -5,12 +5,9 @@ const { ccclass, property } = _decorator;
 
 @ccclass("Volume")
 export class Volume extends Component {
-  private _audioManager: AudioManager = null;
   private _volume: Node = null;
   private _mute: Node = null;
   start() {
-    this._audioManager =
-      Global.instance.audioManager.getComponent(AudioManager);
     this._volume = Global.instance.volumeWrap.getChildByName("volume");
     this._mute = Global.instance.volumeWrap.getChildByName("mute");
     this.node
@@ -23,14 +20,14 @@ export class Volume extends Component {
 
   // 播放声音
   public music() {
-    this._audioManager.music();
+    Global.instance.audioManager.music();
     this._volume.active = true;
     this._mute.active = false;
   }
 
   // 静音
   public stop() {
-    this._audioManager.stop();
+    Global.instance.audioManager.stop();
     this._volume.active = false;
     this._mute.active = true;
   }

@@ -119,7 +119,7 @@
       "__expectedType__": "cc.AudioClip"
     },
     "_loop": true,
-    "_playOnAwake": false,
+    "_playOnAwake": true,
     "_volume": 0.8,
     "_id": ""
   },

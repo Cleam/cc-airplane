@@ -3,6 +3,7 @@ import { AudioManager } from "./base/AudioManager";
 import { GameManager } from "./GameManager";
 import { SelfPlane } from "./npc/SelfPlane";
 import { UIManager } from "./ui/UIManager";
+import { Volume } from "./ui/Volume";
 const { ccclass, property } = _decorator;
 
 export class Global {
@@ -52,19 +53,21 @@ export class Global {
     const uiRoot = find("Canvas");
     // const ch = uiRoot.children;
     // console.log("ch :>> ", ch);
-    this.gameManager = find("game-manager", uiRoot);
-    this.uiManager = find("ui-manager", uiRoot);
-    this.audioManager = find("audio-manager", this.uiManager)
+    this.gameManager = uiRoot.getChildByName("game-manager");
+    this.uiManager = uiRoot.getChildByName("ui-manager");
+    this.audioManager = this.uiManager
+      .getChildByName("audio-manager")
       .getChildByName("effect")
       .getComponent(AudioManager);
-    this.volumeWrap = find("volume-wrap", this.uiManager);
-    this.gamePage = find("game", this.uiManager);
-    this.gameStartPage = find("game-start", this.uiManager);
-    this.gameOverPage = find("game-over", this.uiManager);
+    this.volumeWrap = this.uiManager.getChildByName("volume-wrap");
+    this.gamePage = this.uiManager.getChildByName("game");
+    this.gameStartPage = this.uiManager.getChildByName("game-start");
+    this.gameOverPage = this.uiManager.getChildByName("game-over");
 
     // 添加脚本组件
     this.gameManager.addComponent(GameManager);
     this.uiManager.addComponent(UIManager);
+    this.volumeWrap.addComponent(Volume);
   }
 
   public setPrefab(data: Prefab) {

@@ -9,7 +9,6 @@ import {
   macro,
   Label,
   Animation,
-  find,
   log,
 } from "cc";
 import { Bullet } from "./npc/Bullet";
@@ -212,7 +211,6 @@ export class GameManager extends Component {
       Global.instance.bullet01,
       Global.instance.bulletManager
     );
-    debugger;
     const pos = Global.instance.selfPlane.node.position;
     bulletNode.setPosition(pos.x, pos.y, pos.z - 2.5);
     const bulletComp = bulletNode.getComponent(Bullet);
