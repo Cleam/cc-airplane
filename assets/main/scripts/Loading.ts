@@ -100,7 +100,7 @@ export class Loading extends Component {
         //   this.progressLabel.string = Math.floor(progress * 100) + "%";
         // },
         (err, data) => {
-          console.log("resources data :>> ", data);
+          console.log(p, data);
           if (p.startsWith("prefab/d3")) {
             this._scene.addChild(instantiate(data));
           } else if (p.startsWith("prefab/ui")) {

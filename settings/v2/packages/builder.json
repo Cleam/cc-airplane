@@ -1,5 +1,7 @@
 {
   "splash-setting": {
-    "displayWatermark": true
+    "displayWatermark": false,
+    "url": "/Users/admin/home/code/github/cc-airplane/assets/ab-game/res/texture/logo.png",
+    "displayRatio": 0.3
   }
 }

@@ -1,5 +1,4 @@
 import { _decorator, Component, Node, Input } from "cc";
-import { AudioManager } from "../base/AudioManager";
 import { Global } from "../Global";
 const { ccclass, property } = _decorator;
 

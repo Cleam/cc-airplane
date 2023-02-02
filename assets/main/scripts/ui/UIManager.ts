@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 
 @ccclass("UIManager")
 export class UIManager extends Component {
-  public planeSpeed: number = 8;
+  public planeSpeed: number = 5;
 
   private _gameManager: GameManager = null;
 
